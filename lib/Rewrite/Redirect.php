@@ -241,6 +241,10 @@ class Redirect {
 			}
 		}
 
+		if ( empty( $sites ) ) {
+			return '';
+		}
+
 		// Get domain from post_title (adjust if using post_name or custom field).
 		$domain = trim( get_post_field( 'post_title', $sites[0] ) );
 		if ( ! $domain ) {
