@@ -30,7 +30,7 @@ class RewriteRules {
 	public function add_rewrite_rules() {
 		// /webring/{next|prev|random}/{domain.tld}
 		add_rewrite_rule(
-			'^webring/([^/]+)/(prev|next|random|jo)/?$',
+			'^webring/(prev|next|random|jo)/([^/]+)/?$',
 			'index.php?webring_action=$matches[1]&webring_domain=$matches[2]',
 			'top'
 		);
