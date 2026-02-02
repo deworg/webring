@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "webring/html-snippet",
+	"version": "0.1.0",
+	"title": "Webring HTML snippet",
+	"category": "widgets",
+	"icon": "html",
+	"description": "Show the HTML snippet to add the webring to an external website.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"webringName": {
+			"type": "string",
+			"default": ""
+		},
+		"showCopyInstructions": {
+			"type": "boolean",
+			"default": true
+		},
+		"showCopyButton": {
+			"type": "boolean",
+			"default": true
+		},
+		"showCustomizationInstructions": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"textdomain": "webring",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}

@@ -7,6 +7,7 @@
 
 namespace Webring;
 
+use Webring\Block\ManifestLoader;
 use Webring\PostType\Website;
 use Webring\Rewrite\CategoryRules;
 use Webring\Rewrite\QueryVars;
@@ -21,6 +22,7 @@ use Webring\Taxonomy\Category;
 function init() {
 	// Construct all modules to initialize.
 	$modules = [
+		'block_manifest_loader'     => new ManifestLoader(),
 		'post_type_webring_website' => new Website(),
 		'rewrite_category_rules'    => new CategoryRules(),
 		'rewrite_query_vars'        => new QueryVars(),
