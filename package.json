@@ -29,6 +29,10 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^31.4.0"
+		"@wordpress/scripts": "^31.4.0",
+		"postcss-prefix-selector": "^2.1.1"
+	},
+	"dependencies": {
+		"prismjs": "^1.30.0"
 	}
 }

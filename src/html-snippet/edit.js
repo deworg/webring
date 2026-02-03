@@ -13,6 +13,7 @@ import {
 	PanelBody,
 	TextControl,
 	ToggleControl,
+	SelectControl,
 } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -40,13 +41,15 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-
 export default function Edit( { attributes, setAttributes } ) {
 	const {
 		webringName,
 		showCopyInstructions,
 		showCopyButton,
 		showCustomizationInstructions,
+		enableSyntaxHighlighting,
+		syntaxHighlightingTheme,
+		wrapLines
 	} = attributes;
 
 	return (
@@ -87,6 +90,32 @@ export default function Edit( { attributes, setAttributes } ) {
 							setAttributes( { showCustomizationInstructions: value } )
 						}
 					/>
+				</PanelBody>
+				<PanelBody title={ __( 'Syntax Highlighting Settings' ) } initialOpen={ true }>
+					<ToggleControl
+						label={ __( 'Enable syntax highlighting' ) }
+						checked={ enableSyntaxHighlighting }
+						onChange={ ( value ) => setAttributes( { enableSyntaxHighlighting: value } ) }
+					/>
+					{ enableSyntaxHighlighting && (
+						<>
+							<SelectControl
+								label={ __( 'Select syntax highlighting theme' ) }
+								value={ syntaxHighlightingTheme }
+								options={ [
+									{ label: 'Light', value: 'prism-theme-default' },
+									{ label: 'Dark', value: 'prism-theme-tomorrow' },
+									{ label: 'Okaidia', value: 'prism-theme-okaidia' }
+								] }
+								onChange={ ( value ) => setAttributes( { syntaxHighlightingTheme: value } ) }
+							/>
+							<ToggleControl
+								label={ __( 'Wrap lines' ) }
+								checked={ wrapLines }
+								onChange={ ( value ) => setAttributes( { wrapLines: value } ) }
+							/>
+						</>
+					) }
 				</PanelBody>
 			</InspectorControls>
 

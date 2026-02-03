@@ -20,25 +20,40 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
 
+/**
+ * Retrieves the translation of text.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
+ */
 import { __ } from '@wordpress/i18n';
 
-document.addEventListener('click', (event) => {
-	const button = event.target.closest('.copy-code-button');
+/**
+ * Import the Prism Syntax Highlighting.
+ */
+import initPrism from "./prism";
+
+document.addEventListener( "DOMContentLoaded", () => {
+	initPrism();
+} );
+
+document.addEventListener( 'click', ( event ) => {
+	const button = event.target.closest( '.copy-code-button' );
 	if (!button) return;
 
 	const targetId = button.dataset.target;
-	const codeEl = document.getElementById(targetId);
+	const codeEl = document.getElementById( targetId );
 
 	if (!codeEl) return;
 
 	const text = codeEl.innerText;
 
-	navigator.clipboard.writeText(text).then(() => {
+	navigator.clipboard.writeText( text ).then( () => {
 		const previousButtonText = button.textContent;
-		button.textContent = __('Copied!');
-		setTimeout(() => {
+		button.textContent = __( 'Copied!' );
+		setTimeout( () => {
 			button.textContent = previousButtonText;
-		}, 1500);
-	});
-});
+		}, 1500 );
+	} );
+} );
+
 

@@ -27,6 +27,18 @@
 		"showCustomizationInstructions": {
 			"type": "boolean",
 			"default": false
+		},
+		"enableSyntaxHighlighting": {
+			"type": "boolean",
+			"default": false
+		},
+		"syntaxHighlightingTheme": {
+			"type": "string",
+			"default": "prism"
+		},
+		"wrapLines": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"textdomain": "webring",
@@ -34,5 +46,6 @@
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"render": "file:./render.php",
-	"viewScript": "file:./view.js"
+	"viewScript": "file:./view.js",
+	"viewStyle": "file:./view.css"
 }

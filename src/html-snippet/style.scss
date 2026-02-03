@@ -5,8 +5,8 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-html-snippet {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+:root .prism-enabled.prism-wrap-lines [class*="language-"] {
+	white-space: pre-wrap;
+	word-break: break-word;
+	overflow-wrap: anywhere;
 }
