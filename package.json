@@ -29,6 +29,7 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"devDependencies": {
+		"@wordpress/icons": "^11.7.0",
 		"@wordpress/scripts": "^31.4.0",
 		"postcss-prefix-selector": "^2.1.1"
 	},

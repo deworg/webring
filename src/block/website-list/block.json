@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "webring/website-list",
+	"version": "0.1.0",
+	"title": "Webring Website List",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"categories": {
+			"type": "array",
+			"items": {
+				"type": "object"
+			}
+		},
+		"postsToShow": {
+			"type": "number",
+			"default": 5
+		},
+		"postLayout": {
+			"type": "string",
+			"default": "list"
+		},
+		"columns": {
+			"type": "number",
+			"default": 3
+		},
+		"order": {
+			"type": "string",
+			"default": "desc"
+		},
+		"orderBy": {
+			"type": "string",
+			"default": "date"
+		},
+		"displayFeaturedImage": {
+			"type": "boolean",
+			"default": false
+		},
+		"featuredImageAlign": {
+			"type": "string",
+			"enum": [ "left", "center", "right" ]
+		},
+		"featuredImageSizeSlug": {
+			"type": "string",
+			"default": "thumbnail"
+		},
+		"featuredImageSizeWidth": {
+			"type": "number",
+			"default": 150
+		},
+		"featuredImageSizeHeight": {
+			"type": "number",
+			"default": 150
+		},
+		"addLinkToFeaturedImage": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"textdomain": "webring",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}
