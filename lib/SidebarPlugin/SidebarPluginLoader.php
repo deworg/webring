@@ -34,7 +34,8 @@ class SidebarPluginLoader {
 			'webring-sidebar-plugin',
 			WEBRING_URL . '/build/sidebar-plugin.js',
 			$asset['dependencies'],
-			$asset['version']
+			$asset['version'],
+			true
 		);
 	}
 }

@@ -2,7 +2,10 @@
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
- * The following variables are exposed to the file:
+ * @package webring
+ *
+ *  The following variables are exposed to the file:
+ *
  * @var array    $attributes The block attributes.
  * @var string   $content    The block default content.
  * @var WP_Block $block      The block instance.
@@ -22,47 +25,55 @@ $wrap_lines                      = $attributes['wrapLines'] ?? false;
 $block_id = wp_unique_id( 'code-block-' );
 
 ?>
-<div <?php echo get_block_wrapper_attributes(); ?>>
+<div <?php echo get_block_wrapper_attributes(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php if ( $show_copy_instructions ) : ?>
 	<p><?php echo wp_kses_post( __( 'Copy this snippet for the webring to your website and replace <code>YOUR-DOMAIN.TLD</code> with your own domain name from the webring:', 'webring' ) ); ?></p>
 	<?php endif; ?>
 	<div class="<?php echo $enable_syntax_highlighting ? 'prism-enabled ' . esc_attr( $syntax_highlighting_theme ) : ''; ?> <?php echo $wrap_lines ? 'prism-wrap-lines' : ''; ?>">
-	<pre class="webring-html-snippet"><code id="html-snippet-<?php echo esc_attr( $block_id ) ?>" class="language-markup"><?php
+	<pre class="webring-html-snippet"><code id="html-snippet-<?php echo esc_attr( $block_id ); ?>" class="language-markup"><?php // phpcs:ignore Squiz.PHP.EmbeddedPhp
 		echo esc_html(
 			sprintf(
 				"<nav aria-label=\"%s\">\n\t%s\n\t%s\n\t%s\n\t%s\n</nav>",
 				esc_html__( 'Webring navigation', 'webring' ),
 				sprintf(
+				// translators: %1$s: The webring URL for `prev`, %2$s: The `aria-label`describing the link.
 					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
 					esc_url( get_home_url( '/webring' ) . '/prev/YOUR-DOMAIN.TLD' ),
 					sprintf(
+					// translators: %s: The webring name.
 						esc_html__( 'Visit the previous website in the %s', 'webring' ),
 						$webring_name
 					),
 					esc_attr_x( '←', 'webring prev link text', 'webring' ),
 				),
 				sprintf(
+				// translators: %1$s: The webring URL for `index`, %2$s: The `aria-label`describing the link.
 					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
 					esc_url( get_home_url( '/webring' ) ),
 					sprintf(
+						// translators: %s: The webring name.
 						esc_html__( 'Visit the %s', 'webring' ),
 						$webring_name
 					),
 					esc_attr( $webring_name ),
 				),
 				sprintf(
+					// translators: %1$s: The webring URL for `random`, %2$s: The `aria-label`describing the link.
 					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
 					esc_url( get_home_url( '/webring' ) . '/random/YOUR-DOMAIN.TLD' ),
 					sprintf(
+						// translators: %s: The webring name.
 						esc_html__( 'Visit a random website from the %s', 'webring' ),
 						$webring_name
 					),
 					esc_attr__( 'random', 'webring' ),
 				),
 				sprintf(
+				// translators: %1$s: The webring URL for `next`, %2$s: The `aria-label`describing the link.
 					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
 					esc_url( get_home_url( '/webring' ) . '/next/YOUR-DOMAIN.TLD' ),
 					sprintf(
+					// translators: %s: The webring name.
 						esc_html__( 'Visit the next website in the %s', 'webring' ),
 						$webring_name
 					),
@@ -70,7 +81,7 @@ $block_id = wp_unique_id( 'code-block-' );
 				)
 			)
 		);
-		?></code></pre>
+		// phpcs:ignore Squiz.PHP.EmbeddedPhp ?></code></pre>
 	</div>
 	<script>Prism.highlightAll();console.log('highlighted')</script>
 	<?php if ( $show_copy_button ) : ?>
