@@ -31,6 +31,6 @@ class ManifestLoader {
 	 * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
 	 */
 	public function register_block_types() {
-		wp_register_block_types_from_metadata_collection( WEBRING_PATH . '/build', WEBRING_PATH . '/build/blocks-manifest.php' );
+		wp_register_block_types_from_metadata_collection( WEBRING_PATH . '/build/block', WEBRING_PATH . '/build/blocks-manifest.php' );
 	}
 }
