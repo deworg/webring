@@ -94,9 +94,7 @@ import './editor.scss';
 
 function Controls( { attributes, setAttributes } ) {
 	const {
-		postsToShow,
-		order,
-		orderBy,
+
 		categories,
 		selectedAuthor,
 		displayFeaturedImage,
@@ -154,9 +152,9 @@ function Controls( { attributes, setAttributes } ) {
 	const selectCategories = ( tokens ) => {
 		const hasNoSuggestion = tokens.some(
 			( token ) =>
-				typeof token === 'string' && ! categorySuggestions[ token ]
+				typeof token === 'string' && !categorySuggestions[ token ]
 		);
-		if ( hasNoSuggestion ) {
+		if (hasNoSuggestion) {
 			return;
 		}
 		// Categories that are already will be objects, while new additions will be strings (the name).
@@ -168,7 +166,7 @@ function Controls( { attributes, setAttributes } ) {
 		} );
 		// We do nothing if the category is not selected
 		// from suggestions.
-		if ( allCategories.includes( null ) ) {
+		if (allCategories.includes( null )) {
 			return false;
 		}
 		setAttributes( { categories: allCategories } );
@@ -176,7 +174,6 @@ function Controls( { attributes, setAttributes } ) {
 
 	return (
 		<>
-
 			<ToolsPanel
 				label={ __( 'Post meta' ) }
 				resetAll={ () =>
@@ -186,7 +183,7 @@ function Controls( { attributes, setAttributes } ) {
 				}
 			>
 				<ToolsPanelItem
-					hasValue={ () => !! displayWebsiteUrl }
+					hasValue={ () => !!displayWebsiteUrl }
 					label={ __( 'Display website URL' ) }
 					onDeselect={ () =>
 						setAttributes( { displayWebsiteUrl: false } )
@@ -216,7 +213,7 @@ function Controls( { attributes, setAttributes } ) {
 				}
 			>
 				<ToolsPanelItem
-					hasValue={ () => !! displayFeaturedImage }
+					hasValue={ () => !!displayFeaturedImage }
 					label={ __( 'Display featured image' ) }
 					onDeselect={ () =>
 						setAttributes( { displayFeaturedImage: false } )
@@ -252,11 +249,11 @@ function Controls( { attributes, setAttributes } ) {
 							<ImageSizeControl
 								onChange={ ( value ) => {
 									const newAttrs = {};
-									if ( value.hasOwnProperty( 'width' ) ) {
+									if (value.hasOwnProperty( 'width' )) {
 										newAttrs.featuredImageSizeWidth =
 											value.width;
 									}
-									if ( value.hasOwnProperty( 'height' ) ) {
+									if (value.hasOwnProperty( 'height' )) {
 										newAttrs.featuredImageSizeHeight =
 											value.height;
 									}
@@ -281,7 +278,7 @@ function Controls( { attributes, setAttributes } ) {
 							/>
 						</ToolsPanelItem>
 						<ToolsPanelItem
-							hasValue={ () => !! featuredImageAlign }
+							hasValue={ () => !!featuredImageAlign }
 							label={ __( 'Image alignment' ) }
 							onDeselect={ () =>
 								setAttributes( {
@@ -319,7 +316,7 @@ function Controls( { attributes, setAttributes } ) {
 							</ToggleGroupControl>
 						</ToolsPanelItem>
 						<ToolsPanelItem
-							hasValue={ () => !! addLinkToFeaturedImage }
+							hasValue={ () => !!addLinkToFeaturedImage }
 							label={ __( 'Add link to featured image' ) }
 							onDeselect={ () =>
 								setAttributes( {
@@ -345,9 +342,6 @@ function Controls( { attributes, setAttributes } ) {
 				label={ __( 'Sorting and filtering' ) }
 				resetAll={ () =>
 					setAttributes( {
-						order: 'desc',
-						orderBy: 'date',
-						postsToShow: 5,
 						categories: undefined,
 						selectedAuthor: undefined,
 						columns: 3,
@@ -356,18 +350,12 @@ function Controls( { attributes, setAttributes } ) {
 			>
 				<ToolsPanelItem
 					hasValue={ () =>
-						order !== 'desc' ||
-						orderBy !== 'date' ||
-						postsToShow !== 5 ||
 						categories?.length > 0 ||
 						!!selectedAuthor
 					}
 					label={ __( 'Sort and filter' ) }
 					onDeselect={ () =>
 						setAttributes( {
-							order: 'desc',
-							orderBy: 'date',
-							postsToShow: 5,
 							categories: undefined,
 							selectedAuthor: undefined,
 						} )
@@ -375,17 +363,6 @@ function Controls( { attributes, setAttributes } ) {
 					isShownByDefault
 				>
 					<QueryControls
-						{ ...{ order, orderBy } }
-						numberOfItems={ postsToShow }
-						onOrderChange={ ( value ) =>
-							setAttributes( { order: value } )
-						}
-						onOrderByChange={ ( value ) =>
-							setAttributes( { orderBy: value } )
-						}
-						onNumberOfItemsChange={ ( value ) =>
-							setAttributes( { postsToShow: value } )
-						}
 						categorySuggestions={ categorySuggestions }
 						onCategoryChange={ selectCategories }
 						selectedCategories={ categories }
@@ -431,9 +408,6 @@ function Controls( { attributes, setAttributes } ) {
  */
 export default function Edit( { attributes, setAttributes } ) {
 	const {
-		postsToShow,
-		order,
-		orderBy,
 		categories,
 		selectedAuthor,
 		displayFeaturedImage,
@@ -450,7 +424,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		featuredImageSizeHeight,
 		addLinkToFeaturedImage,
 	} = attributes;
-	console.log(`postLayout: ${postLayout}`);
+	console.log( `postLayout: ${ postLayout }` );
 
 	const inspectorControls = (
 		<InspectorControls>
@@ -483,7 +457,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				<ToolbarGroup controls={ layoutControls }/>
 			</BlockControls>
 
-			<div { ...useBlockProps() }>
+			<div { ...useBlockProps() } title="wrapper">
 				<ServerSideRender
 					block="webring/website-list"
 					attributes={ attributes }

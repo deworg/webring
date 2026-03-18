@@ -4,43 +4,122 @@
  *
  * @package webring
  *
- * The following variables are exposed to the file:
+ *  The following variables are exposed to the file:
  *
- *     $attributes (array): The block attributes.
- *     $content (string): The block default content.
- *     $block (WP_Block): The block instance.
+ * @var array    $attributes The block attributes.
+ * @var string   $content    The block default content.
+ * @var WP_Block $block      The block instance.
  *
- * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ * @see     https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
-$query = new WP_Query(
-	array(
-		'post_type'      => 'webring_website',
-		'posts_per_page' => -1,
-		'orderby'        => 'title',
-		'order'          => 'ASC',
-	)
-);
+$args = [
+	'post_type'   => 'webring_website',
+	'post_status' => 'publish',
+];
 
-?>
-<div <?php echo get_block_wrapper_attributes(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-	<?php if ( $query->have_posts() ) : ?>
-		<ul>
-			<?php
-			while ( $query->have_posts() ) :
-				$query->the_post();
-				?>
-				<li>
-					<a href="<?php echo esc_url( get_post_meta( get_the_ID(), 'website_url', true ) ); ?>">
-						<?php the_title(); ?>
-					</a>
-				</li>
-			<?php endwhile; ?>
-		</ul>
-		<?php
-		wp_reset_postdata();
-	else :
-		?>
-		<p><?php esc_html_e( 'No websites found.', 'webring' ); ?></p>
-	<?php endif; ?>
-</div>
+if ( ! empty( $attributes['categories'] ) ) {
+	$args['tax_query'] = [
+		[
+			'taxonomy' => 'webring_category',
+			'field'    => 'term_id',
+			'terms'    => array_column( $attributes['categories'], 'id' ),
+		],
+	];
+}
+
+$query            = new WP_Query();
+$webring_websites = $query->query( $args );
+
+if ( empty( $webring_websites ) ) {
+	if ( ! wp_is_serving_rest_request() ) {
+		return;
+	}
+
+	printf(
+		'<div class="components-placeholder"><div class="components-placeholder__fieldset">%s</div></div>',
+		__( 'No websites found. Try to change your filters', 'webring' ),
+	);
+
+	return;
+} else {
+	if ( isset( $attributes['displayFeaturedImage'] ) && $attributes['displayFeaturedImage'] ) {
+		update_post_thumbnail_cache( $query );
+	}
+
+	$list_items_markup = '';
+
+	foreach ( $webring_websites as $post ) {
+		$post_link = esc_url( get_post_meta( $post, 'webring_website_url' ) );
+		$title     = get_the_title( $post );
+
+		if ( ! $title ) {
+			$title = __( '(no title)' );
+		}
+
+		$list_items_markup .= '<li>';
+
+		if ( $attributes['displayFeaturedImage'] && has_post_thumbnail( $post ) ) {
+			$image_style = '';
+			if ( isset( $attributes['featuredImageSizeWidth'] ) ) {
+				$image_style .= sprintf( 'max-width:%spx;', $attributes['featuredImageSizeWidth'] );
+			}
+			if ( isset( $attributes['featuredImageSizeHeight'] ) ) {
+				$image_style .= sprintf( 'max-height:%spx;', $attributes['featuredImageSizeHeight'] );
+			}
+
+			$image_classes = 'wp-block-webring-website-list__featured-image';
+			if ( isset( $attributes['featuredImageAlign'] ) ) {
+				$image_classes .= ' align' . $attributes['featuredImageAlign'];
+			}
+
+			$featured_image = get_the_post_thumbnail(
+				$post,
+				$attributes['featuredImageSizeSlug'],
+				[
+					'style' => esc_attr( $image_style ),
+				]
+			);
+			if ( $attributes['addLinkToFeaturedImage'] ) {
+				$featured_image = sprintf(
+					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+					esc_url( $post_link ),
+					esc_attr( $title ),
+					$featured_image
+				);
+			}
+			$list_items_markup .= sprintf(
+				'<div class="%1$s">%2$s</div>',
+				esc_attr( $image_classes ),
+				$featured_image
+			);
+		}
+
+		$list_items_markup .= sprintf(
+			'<a class="wp-block-webring-website-list__post-title" href="%1$s">%2$s</a>',
+			esc_url( $post_link ),
+			$title
+		);
+
+		$list_items_markup .= "</li>\n";
+	}
+
+	$classes = [ 'wp-block-webring-website-list__list' ];
+	if ( isset( $attributes['postLayout'] ) && 'grid' === $attributes['postLayout'] ) {
+		$classes[] = 'is-grid';
+	}
+	if ( isset( $attributes['columns'] ) && 'grid' === $attributes['postLayout'] ) {
+		$classes[] = 'columns-' . $attributes['columns'];
+	}
+	if ( isset( $attributes['style']['elements']['link']['color']['text'] ) ) {
+		$classes[] = 'has-link-color';
+	}
+
+	$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => implode( ' ', $classes ) ] );
+
+	printf(
+		'<ul %1$s>%2$s</ul>',
+		$wrapper_attributes,
+		$list_items_markup
+	);
+}

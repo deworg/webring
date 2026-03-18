@@ -5,5 +5,22 @@
  */
 
 .wp-block-webring-website-list {
-	border: 1px dotted #f00;
+	// Apply overflow for post items, so any floated featured images won't crop the focus style.
+	> li {
+		overflow: hidden;
+	}
+}
+
+.wp-block-webring-website-list li a > div {
+	display: inline;
+}
+
+:root :where(.wp-block-webring-website-list) {
+	padding-left: 2.5em;
+}
+:root {
+	:where(.wp-block-webring-website-list.is-grid),
+	:where(.wp-block-webring-website-list__list) {
+		padding-left: 0;
+	}
 }
