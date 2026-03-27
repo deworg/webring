@@ -3,6 +3,9 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+div.wp-block-webring-website-list {
+	padding: 0;
+}
 
 .wp-block-webring-website-list {
 	// Apply overflow for post items, so any floated featured images won't crop the focus style.
