@@ -2,11 +2,8 @@
  * WordPress dependencies
  */
 import {
-	Placeholder,
 	QueryControls,
-	RadioControl,
 	RangeControl,
-	Spinner,
 	ToggleControl,
 	ToolbarGroup,
 	__experimentalToggleGroupControl as ToggleGroupControl,
@@ -14,16 +11,14 @@ import {
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
-import { dateI18n, format, getSettings } from '@wordpress/date';
 import {
 	InspectorControls,
 	BlockControls,
 	__experimentalImageSizeControl as ImageSizeControl,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import {
-	pin,
 	list,
 	grid,
 	alignNone,
@@ -32,9 +27,6 @@ import {
 	positionRight,
 } from '@wordpress/icons';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticeStore } from '@wordpress/notices';
-import { useInstanceId } from '@wordpress/compose';
-import { createInterpolateElement } from '@wordpress/element';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -74,7 +66,7 @@ const imageAlignmentOptions = [
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __, _x, sprintf } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -94,7 +86,6 @@ import './editor.scss';
 
 function Controls( { attributes, setAttributes } ) {
 	const {
-
 		categories,
 		selectedAuthor,
 		displayFeaturedImage,
@@ -158,14 +149,13 @@ function Controls( { attributes, setAttributes } ) {
 			return;
 		}
 		// Categories that are already will be objects, while new additions will be strings (the name).
-		// allCategories nomalizes the array so that they are all objects.
+		// allCategories normalize the array so that they are all objects.
 		const allCategories = tokens.map( ( token ) => {
 			return typeof token === 'string'
 				? categorySuggestions[ token ]
 				: token;
 		} );
-		// We do nothing if the category is not selected
-		// from suggestions.
+		// We do nothing if the category is not selected from suggestions.
 		if (allCategories.includes( null )) {
 			return false;
 		}
@@ -408,21 +398,7 @@ function Controls( { attributes, setAttributes } ) {
  */
 export default function Edit( { attributes, setAttributes } ) {
 	const {
-		categories,
-		selectedAuthor,
-		displayFeaturedImage,
-		displayPostContentRadio,
-		displayPostContent,
-		displayPostDate,
-		displayWebsiteUrl,
 		postLayout,
-		columns,
-		excerptLength,
-		featuredImageAlign,
-		featuredImageSizeSlug,
-		featuredImageSizeWidth,
-		featuredImageSizeHeight,
-		addLinkToFeaturedImage,
 	} = attributes;
 	console.log( `postLayout: ${ postLayout }` );
 
