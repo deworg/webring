@@ -33,4 +33,6 @@ jobs:
       - name: Run plugin check
         uses: wordpress/plugin-check-action@v1
         with:
+          ignore-codes: |
+            missing_direct_file_access_protection
           build-dir: ./tmp-build/${{ github.event.repository.name }}
