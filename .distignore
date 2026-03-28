@@ -1,0 +1,14 @@
+*.lock
+.distignore
+.editorconfig
+.eslintrc
+.git
+.gitattributes
+.github
+.gitignore
+.stylelintrc.json
+.wordpress-org
+node_modules
+package-lock.json
+package.json
+phpcs.xml

@@ -13,6 +13,8 @@
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 $webring_name                    = $attributes['webringName'] ?? 'webring';
 $show_copy_instructions          = $attributes['showCopyInstructions'] ?? true;
 $show_copy_button                = $attributes['showCopyButton'] ?? true;
