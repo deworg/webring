@@ -79,12 +79,10 @@
 			"default": "thumbnail"
 		},
 		"featuredImageSizeWidth": {
-			"type": "number",
-			"default": 150
+			"type": "number"
 		},
 		"featuredImageSizeHeight": {
-			"type": "number",
-			"default": 150
+			"type": "number"
 		},
 		"addLinkToFeaturedImage": {
 			"type": "boolean",
