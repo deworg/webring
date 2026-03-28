@@ -63,9 +63,10 @@ class Website {
 				'show_ui'               => true,
 				'show_in_nav_menus'     => true,
 				'supports'              => [
-					'editor',
-					'title',
 					'custom-fields',
+					'editor',
+					'thumbnail',
+					'title',
 				],
 				'has_archive'           => true,
 				'rewrite'               => true,
