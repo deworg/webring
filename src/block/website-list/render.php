@@ -13,6 +13,8 @@
  * @see     https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 $args = [
 	'post_type'   => 'webring_website',
 	'post_status' => 'publish',
@@ -38,7 +40,7 @@ if ( empty( $webring_websites ) ) {
 
 	printf(
 		'<div class="components-placeholder"><div class="components-placeholder__fieldset">%s</div></div>',
-		__( 'No websites found. Try to change your filters', 'webring' ),
+		esc_html__( 'No websites found. Try to change your filters', 'webring' ),
 	);
 
 	return;
@@ -49,17 +51,17 @@ if ( empty( $webring_websites ) ) {
 
 	$list_items_markup = '';
 
-	foreach ( $webring_websites as $post ) {
-		$post_link = esc_url( get_post_meta( $post, 'webring_website_url' ) );
-		$title     = get_the_title( $post );
+	foreach ( $webring_websites as $website ) {
+		$website_link  = get_post_meta( $website, 'webring_website_url' );
+		$website_title = get_the_title( $website );
 
-		if ( ! $title ) {
-			$title = __( '(no title)' );
+		if ( ! $website_title ) {
+			$website_title = __( '(no title)', 'webring' );
 		}
 
 		$list_items_markup .= '<li>';
 
-		if ( $attributes['displayFeaturedImage'] && has_post_thumbnail( $post ) ) {
+		if ( $attributes['displayFeaturedImage'] && has_post_thumbnail( $website ) ) {
 			$image_style = '';
 			if ( isset( $attributes['featuredImageSizeWidth'] ) ) {
 				$image_style .= sprintf( 'max-width:%spx;', $attributes['featuredImageSizeWidth'] );
@@ -74,7 +76,7 @@ if ( empty( $webring_websites ) ) {
 			}
 
 			$featured_image = get_the_post_thumbnail(
-				$post,
+				$website,
 				$attributes['featuredImageSizeSlug'],
 				[
 					'style' => esc_attr( $image_style ),
@@ -83,8 +85,8 @@ if ( empty( $webring_websites ) ) {
 			if ( $attributes['addLinkToFeaturedImage'] ) {
 				$featured_image = sprintf(
 					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
-					esc_url( $post_link ),
-					esc_attr( $title ),
+					esc_url( $website_link ),
+					esc_attr( $website_title ),
 					$featured_image
 				);
 			}
@@ -97,8 +99,8 @@ if ( empty( $webring_websites ) ) {
 
 		$list_items_markup .= sprintf(
 			'<a class="wp-block-webring-website-list__post-title" href="%1$s">%2$s</a>',
-			esc_url( $post_link ),
-			$title
+			esc_url( $website_link ),
+			$website_title
 		);
 
 		$list_items_markup .= "</li>\n";
@@ -117,6 +119,7 @@ if ( empty( $webring_websites ) ) {
 
 	$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => implode( ' ', $classes ) ] );
 
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	printf(
 		'<ul %1$s>%2$s</ul>',
 		$wrapper_attributes,
