@@ -165,7 +165,7 @@ function Controls( { attributes, setAttributes } ) {
 	return (
 		<>
 			<ToolsPanel
-				label={ __( 'Post meta' ) }
+				label={ __( 'Post meta', 'webring' ) }
 				resetAll={ () =>
 					setAttributes( {
 						displayWebsiteUrl: false,
@@ -174,14 +174,14 @@ function Controls( { attributes, setAttributes } ) {
 			>
 				<ToolsPanelItem
 					hasValue={ () => !!displayWebsiteUrl }
-					label={ __( 'Display website URL' ) }
+					label={ __( 'Display website URL', 'webring' ) }
 					onDeselect={ () =>
 						setAttributes( { displayWebsiteUrl: false } )
 					}
 					isShownByDefault
 				>
 					<ToggleControl
-						label={ __( 'Display website URL' ) }
+						label={ __( 'Display website URL', 'webring' ) }
 						checked={ displayWebsiteUrl }
 						onChange={ ( value ) =>
 							setAttributes( { displayWebsiteUrl: value } )

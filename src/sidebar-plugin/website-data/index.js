@@ -28,11 +28,11 @@ const WebringWebsiteDataMetaPanel = () => {
 	return (
 		<PluginDocumentSettingPanel
 			name="webring-website-data-meta-panel"
-			title={ __( 'Website data' ) }
+			title={ __( 'Website data', 'webring' ) }
 			className="webring-website-data-meta-panel"
 		>
 			<TextControl
-				label={ __( 'Website URL' ) }
+				label={ __( 'Website URL', 'webring' ) }
 				value={ meta?.webring_website_url || '' }
 				onChange={ ( value ) => setMeta( { ...meta, webring_website_url: value } ) }
 			/>

@@ -91,16 +91,16 @@ export default function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Syntax Highlighting Settings' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Syntax Highlighting Settings', 'webring' ) } initialOpen={ true }>
 					<ToggleControl
-						label={ __( 'Enable syntax highlighting' ) }
+						label={ __( 'Enable syntax highlighting', 'webring' ) }
 						checked={ enableSyntaxHighlighting }
 						onChange={ ( value ) => setAttributes( { enableSyntaxHighlighting: value } ) }
 					/>
 					{ enableSyntaxHighlighting && (
 						<>
 							<SelectControl
-								label={ __( 'Select syntax highlighting theme' ) }
+								label={ __( 'Select syntax highlighting theme', 'webring' ) }
 								value={ syntaxHighlightingTheme }
 								options={ [
 									{ label: 'Light', value: 'prism-theme-default' },
@@ -110,7 +110,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								onChange={ ( value ) => setAttributes( { syntaxHighlightingTheme: value } ) }
 							/>
 							<ToggleControl
-								label={ __( 'Wrap lines' ) }
+								label={ __( 'Wrap lines', 'webring' ) }
 								checked={ wrapLines }
 								onChange={ ( value ) => setAttributes( { wrapLines: value } ) }
 							/>

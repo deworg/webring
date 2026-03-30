@@ -49,7 +49,7 @@ document.addEventListener( 'click', ( event ) => {
 
 	navigator.clipboard.writeText( text ).then( () => {
 		const previousButtonText = button.textContent;
-		button.textContent = __( 'Copied!' );
+		button.textContent = __( 'Copied!', 'webring' );
 		setTimeout( () => {
 			button.textContent = previousButtonText;
 		}, 1500 );
