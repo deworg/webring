@@ -38,48 +38,28 @@ $block_id = wp_unique_id( 'code-block-' );
 				"<nav aria-label=\"%s\">\n\t%s\n\t%s\n\t%s\n\t%s\n</nav>",
 				esc_html__( 'Webring navigation', 'webring' ),
 				sprintf(
-				// translators: %1$s: The webring URL for `prev`, %2$s: The `aria-label`describing the link.
-					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+				// translators: %1$s: The webring URL for `prev`, %2$s: The `prev` link text.
+					'<a href="%1$s">%2$s</a>',
 					esc_url( get_home_url( '/webring' ) . '/prev/YOUR-DOMAIN.TLD' ),
-					sprintf(
-					// translators: %s: The webring name.
-						esc_html__( 'Visit the previous website in the %s', 'webring' ),
-						$webring_name
-					),
-					esc_attr_x( '←', 'webring prev link text', 'webring' ),
+					esc_attr_x( 'prev', 'webring prev link text', 'webring' ),
 				),
 				sprintf(
-				// translators: %1$s: The webring URL for `index`, %2$s: The `aria-label`describing the link.
-					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+				// translators: %1$s: The webring URL for `index`, %2$s: The `index` link text.
+					'<a href="%1$s">%2$s</a>',
 					esc_url( get_home_url( '/webring' ) ),
-					sprintf(
-						// translators: %s: The webring name.
-						esc_html__( 'Visit the %s', 'webring' ),
-						$webring_name
-					),
 					esc_attr( $webring_name ),
 				),
 				sprintf(
-					// translators: %1$s: The webring URL for `random`, %2$s: The `aria-label`describing the link.
-					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+				// translators: %1$s: The webring URL for `random`, %2$s: The `random` link text.
+					'<a href="%1$s">%2$s</a>',
 					esc_url( get_home_url( '/webring' ) . '/random/YOUR-DOMAIN.TLD' ),
-					sprintf(
-						// translators: %s: The webring name.
-						esc_html__( 'Visit a random website from the %s', 'webring' ),
-						$webring_name
-					),
-					esc_attr__( 'random', 'webring' ),
+					esc_attr_x( 'random', 'webring random link text', 'webring' ),
 				),
 				sprintf(
-				// translators: %1$s: The webring URL for `next`, %2$s: The `aria-label`describing the link.
-					'<a href="%1$s" aria-label="%2$s">%3$s</a>',
+				// translators: %1$s: The webring URL for `next`, %2$s: The `next` link text.
+					'<a href="%1$s">%2$s</a>',
 					esc_url( get_home_url( '/webring' ) . '/next/YOUR-DOMAIN.TLD' ),
-					sprintf(
-					// translators: %s: The webring name.
-						esc_html__( 'Visit the next website in the %s', 'webring' ),
-						$webring_name
-					),
-					esc_attr_x( '→', 'webring next link text', 'webring' ),
+					esc_attr_x( 'next', 'webring next link text', 'webring' ),
 				)
 			)
 		);
