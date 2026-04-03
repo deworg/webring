@@ -57,7 +57,7 @@ class Redirect {
 	}
 
 	/**
-	 * Retrieves the URL of the next, previous or random site in a webring.
+	 * Retrieves the URL of the next, previous, or random site in a webring.
 	 *
 	 * @param string      $action   The action to perform: 'next', 'prev' or 'random'.
 	 * @param string      $url      The current site's domain.
@@ -66,213 +66,200 @@ class Redirect {
 	 * @return string The URL of the new site in the webring, or an empty string if no site is found.
 	 */
 	public function get_new_webring_site( string $action, string $url, string $category = null ): string {
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
 		$current_site = $this->get_site_by_domain( $url );
 		if ( ! $current_site ) {
 			wp_die( 'Webring site not found', 'Webring', 404 );
 		}
 
+		$current_site_url_sanitized = get_post_meta( $current_site->ID, '_webring_website_url_sanitized', true );
+
 		global $wpdb;
 
+		$term_tax_id = null;
 		if ( $category ) {
 			$term = get_term_by( 'slug', $category, 'webring_category' );
 			if ( ! $term ) {
 				return '';
 			}
-
-			$term_tax_id = $term->term_taxonomy_id;
-
-			if ( 'prev' === $action ) {
-				$where_clause = '
-					  AND p.menu_order <= %d
-					  AND p.post_date <= %s
-				';
-				$order_clause = 'ORDER BY tr.term_order DESC, p.menu_order DESC, p.post_date DESC, p.ID DESC';
-			} elseif ( 'next' === $action ) {
-				$where_clause = '
-					  AND p.menu_order >= %d
-					  AND p.post_date >= %s
-				';
-				$order_clause = 'ORDER BY tr.term_order ASC, p.menu_order ASC, p.post_date ASC, p.ID ASC';
-			} else {
-				$where_clause = '
-					  -- ignoring menu_order %d
-					  -- ignoring post_date %s
-				';
-				$order_clause = 'ORDER BY RAND()';
-			}
-
-			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter
-			$sites = $wpdb->get_col(
-				$wpdb->prepare(
-					"
-					SELECT p.ID
-					FROM {$wpdb->posts} p
-					INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-					INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
-					WHERE p.post_type = 'webring_website'
-					  AND p.post_status = 'publish'
-					  AND tr.term_taxonomy_id = %d
-					  AND pm.meta_key = '_webring_website_url_sanitized'
-					  AND pm.meta_value != %s
-					  {$where_clause}
-					{$order_clause}
-					LIMIT 1
-					",
-					$term_tax_id,
-					$current_site->post_title,
-					$current_site->menu_order,
-					$current_site->post_date
-				)
-			);
-			// If no site was found, we might hit the beginning or end of the webring.
-			if ( empty( $sites ) ) {
-				if ( 'prev' === $action ) {
-					$sites = $wpdb->get_col(
-						$wpdb->prepare(
-							"
-							SELECT p.ID
-							FROM {$wpdb->posts} p
-							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-							INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
-							WHERE p.post_type = 'webring_website'
-							  AND p.post_status = 'publish'
-							  AND tr.term_taxonomy_id = %d
-							  AND pm.meta_key = '_webring_website_url_sanitized'
-							  AND pm.meta_value != %s
-							ORDER BY tr.term_order DESC, p.menu_order DESC, p.post_date DESC, p.ID DESC
-							LIMIT 1
-							",
-							$term_tax_id,
-							$current_site->post_title
-						)
-					);
-				} elseif ( 'next' === $action ) {
-					$sites = $wpdb->get_col(
-						$wpdb->prepare(
-							"
-							SELECT p.ID
-							FROM {$wpdb->posts} p
-							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-							INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
-							WHERE p.post_type = 'webring_website'
-							  AND p.post_status = 'publish'
-							  AND tr.term_taxonomy_id = %d
-							  AND pm.meta_key = '_webring_website_url_sanitized'
-							  AND pm.meta_value != %s
-							ORDER BY tr.term_order ASC, p.menu_order ASC, p.post_date ASC, p.ID ASC
-							LIMIT 1
-							",
-							$term_tax_id,
-							$current_site->post_title
-						)
-					);
-				}
-			}
-		} else {
-			if ( 'prev' === $action ) {
-				$where_clause = '
-					  AND p.menu_order <= %d
-					  AND p.post_date <= %s
-				';
-				$order_clause = 'ORDER BY p.menu_order DESC, p.post_date DESC, p.ID DESC';
-			} elseif ( 'next' === $action ) {
-				$where_clause = '
-					  AND p.menu_order >= %d
-					  AND p.post_date >= %s
-				';
-				$order_clause = 'ORDER BY p.menu_order ASC, p.post_date ASC, p.ID ASC';
-			} else {
-				$where_clause = '
-					  -- ignoring menu_order %d
-					  -- ignoring post_date %s
-				';
-				$order_clause = 'ORDER BY RAND()';
-			}
-
-			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter
-			$sites = $wpdb->get_col(
-				$wpdb->prepare(
-					"
-					SELECT p.ID
-					FROM {$wpdb->posts} p
-					INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-					WHERE p.post_type = 'webring_website'
-					  AND p.post_status = 'publish'
-					  AND pm.meta_key = '_webring_website_url_sanitized'
-					  AND pm.meta_value != %s
-					  {$where_clause}
-					{$order_clause}
-					LIMIT 1
-					",
-					$current_site->post_title,
-					$current_site->menu_order,
-					$current_site->post_date
-				)
-			);
-
-			// If no site was found, we might hit the beginning or end of the webring.
-			if ( empty( $sites ) ) {
-				if ( 'prev' === $action ) {
-					$sites = $wpdb->get_col(
-						$wpdb->prepare(
-							"
-							SELECT p.ID
-							FROM {$wpdb->posts} p
-							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-							WHERE p.post_type = 'webring_website'
-							  AND p.post_status = 'publish'
-							  AND pm.meta_key = '_webring_website_url_sanitized'
-							  AND pm.meta_value != %s
-							ORDER BY p.menu_order DESC, p.post_date DESC, p.ID DESC
-							LIMIT 1
-							",
-							$current_site->post_title
-						)
-					);
-				} elseif ( 'next' === $action ) {
-					$sites = $wpdb->get_col(
-						$wpdb->prepare(
-							"
-							SELECT p.ID
-							FROM {$wpdb->posts} p
-							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-							WHERE p.post_type = 'webring_website'
-							  AND p.post_status = 'publish'
-							  AND pm.meta_key = '_webring_website_url_sanitized'
-							  AND pm.meta_value != %s
-							ORDER BY p.menu_order ASC, p.post_date ASC, p.ID ASC
-							LIMIT 1
-							",
-							$current_site->post_title
-						)
-					);
-				}
-			}
-
-			if ( empty( $sites ) ) {
-				return '';
-			}
+			$term_tax_id = (int) $term->term_taxonomy_id;
 		}
+
+		$sites = $this->query_candidate_sites(
+			$action,
+			$current_site,
+			$current_site_url_sanitized,
+			$term_tax_id
+		);
 
 		if ( empty( $sites ) ) {
 			return '';
 		}
 
-		// Get domain from post_title (adjust if using post_name or custom field).
 		$url = trim( get_post_meta( $sites[0], 'webring_website_url', true ) );
 		if ( ! $url ) {
 			return '';
 		}
 
-		// Ensure full URL.
 		if ( ! preg_match( '#^https?://#', $url ) ) {
 			$url = 'https://' . $url;
 		}
 
-		// phpcs:enable WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return esc_url_raw( $url );
+	}
+
+	/**
+	 * Builds and executes the query for candidate site IDs.
+	 *
+	 * @param string   $action                     The navigation action.
+	 * @param object   $current_site               The current site object.
+	 * @param string   $current_site_url_sanitized The sanitized current site URL.
+	 * @param int|null $term_tax_id                Optional term taxonomy ID when filtering by category.
+	 *
+	 * @return array<int> List of matching post IDs.
+	 */
+	private function query_candidate_sites( string $action, object $current_site, string $current_site_url_sanitized, ?int $term_tax_id = null ): array {
+		$clause_info = $this->get_navigation_clauses( $action, $current_site );
+
+		if ( null === $clause_info ) {
+			return [];
+		}
+
+		$main_sites = $this->run_candidate_query(
+			$current_site_url_sanitized,
+			$clause_info['where_clause'],
+			$term_tax_id ? $clause_info['term_order_clause'] : $clause_info['order_clause'],
+			$term_tax_id
+		);
+
+		if ( ! empty( $main_sites ) || 'random' === $action ) {
+			return $main_sites;
+		}
+
+		if ( 'prev' !== $action && 'next' !== $action ) {
+			return [];
+		}
+
+		return $this->run_candidate_query(
+			$current_site_url_sanitized,
+			'',
+			$term_tax_id ? $clause_info['term_order_clause'] : $clause_info['order_clause'],
+			$term_tax_id
+		);
+	}
+
+	/**
+	 * Returns SQL clause data for the requested navigation action.
+	 *
+	 * @param string $action       The navigation action.
+	 * @param object $current_site Current site object.
+	 *
+	 * @return array<string, string>|null
+	 */
+	private function get_navigation_clauses( string $action, object $current_site ): ?array {
+		if ( 'prev' === $action ) {
+			return [
+				'where_clause'      => $this->build_boundary_clause( '<=', $current_site ),
+				'order_clause'      => 'ORDER BY p.menu_order DESC, p.post_date DESC, p.ID DESC',
+				'term_order_clause' => 'ORDER BY tr.term_order DESC, p.menu_order DESC, p.post_date DESC, p.ID DESC',
+			];
+		}
+
+		if ( 'next' === $action ) {
+			return [
+				'where_clause'      => $this->build_boundary_clause( '>=', $current_site ),
+				'order_clause'      => 'ORDER BY p.menu_order ASC, p.post_date ASC, p.ID ASC',
+				'term_order_clause' => 'ORDER BY tr.term_order ASC, p.menu_order ASC, p.post_date ASC, p.ID ASC',
+			];
+		}
+
+		if ( 'random' === $action ) {
+			return [
+				'where_clause'      => '',
+				'order_clause'      => 'ORDER BY RAND()',
+				'term_order_clause' => 'ORDER BY RAND()',
+			];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Builds the boundary clause for prev/next navigation.
+	 *
+	 * @param string $operator     Comparison operator.
+	 * @param object $current_site Current site object.
+	 *
+	 * @return string
+	 */
+	private function build_boundary_clause( string $operator, object $current_site ): string {
+		global $wpdb;
+
+		if ( ! in_array( $operator, [ '>=', '<=' ], true ) ) {
+			return '';
+		}
+
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->prepare(
+			'AND p.menu_order ' . $operator . ' %d AND p.post_date ' . $operator . ' %s ',
+			$current_site->menu_order,
+			$current_site->post_date
+		);
+		// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
+	}
+
+	/**
+	 * Executes the candidate site query.
+	 *
+	 * @param string   $current_site_url_sanitized The sanitized current site URL.
+	 * @param string   $where_clause               Optional WHERE fragment.
+	 * @param string   $order_clause               ORDER BY fragment.
+	 * @param int|null $term_tax_id                Optional term taxonomy ID.
+	 *
+	 * @return array<int>
+	 */
+	private function run_candidate_query( string $current_site_url_sanitized, string $where_clause, string $order_clause, ?int $term_tax_id = null ): array {
+		global $wpdb;
+
+		$sql = "
+			SELECT p.ID
+			FROM {$wpdb->posts} p
+			INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+		";
+
+		if ( $term_tax_id ) {
+			$sql .= $wpdb->prepare(
+				"
+				INNER JOIN {$wpdb->term_relationships} tr ON (
+					p.ID = tr.object_id
+					AND tr.term_taxonomy_id = %d
+				)
+				",
+				$term_tax_id
+			);
+		}
+
+		$sql .= "
+			WHERE p.post_type = 'webring_website'
+			  AND p.post_status = 'publish'
+		";
+
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$sql .= $wpdb->prepare(
+			"
+			  AND pm.meta_key = '_webring_website_url_sanitized'
+			  AND pm.meta_value != %s
+			  {$where_clause}
+			{$order_clause}
+			LIMIT 1
+			",
+			$current_site_url_sanitized
+		);
+		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+
+		// phpcs:ignore WordPress.DB.PreparedSQL, WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB
+		return $wpdb->get_col( $sql );
 	}
 
 	/**
