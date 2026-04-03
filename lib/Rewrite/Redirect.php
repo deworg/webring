@@ -60,14 +60,14 @@ class Redirect {
 	 * Retrieves the URL of the next, previous or random site in a webring.
 	 *
 	 * @param string      $action   The action to perform: 'next', 'prev' or 'random'.
-	 * @param string      $domain   The current site's domain.
+	 * @param string      $url      The current site's domain.
 	 * @param string|null $category Optional. The category slug to filter sites by. Default null.
 	 *
 	 * @return string The URL of the new site in the webring, or an empty string if no site is found.
 	 */
-	public function get_new_webring_site( string $action, string $domain, string $category = null ): string {
+	public function get_new_webring_site( string $action, string $url, string $category = null ): string {
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$current_site = $this->get_site_by_domain( $domain );
+		$current_site = $this->get_site_by_domain( $url );
 		if ( ! $current_site ) {
 			wp_die( 'Webring site not found', 'Webring', 404 );
 		}
@@ -102,16 +102,19 @@ class Redirect {
 				$order_clause = 'ORDER BY RAND()';
 			}
 
+			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$sites = $wpdb->get_col(
 				$wpdb->prepare(
 					"
 					SELECT p.ID
 					FROM {$wpdb->posts} p
+					INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 					INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
 					WHERE p.post_type = 'webring_website'
 					  AND p.post_status = 'publish'
 					  AND tr.term_taxonomy_id = %d
-					  AND p.post_title != %s
+					  AND pm.meta_key = '_webring_website_url_sanitized'
+					  AND pm.meta_value != %s
 					  {$where_clause}
 					{$order_clause}
 					LIMIT 1
@@ -130,11 +133,13 @@ class Redirect {
 							"
 							SELECT p.ID
 							FROM {$wpdb->posts} p
+							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 							INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
 							WHERE p.post_type = 'webring_website'
 							  AND p.post_status = 'publish'
 							  AND tr.term_taxonomy_id = %d
-							  AND p.post_title != %s
+							  AND pm.meta_key = '_webring_website_url_sanitized'
+							  AND pm.meta_value != %s
 							ORDER BY tr.term_order DESC, p.menu_order DESC, p.post_date DESC, p.ID DESC
 							LIMIT 1
 							",
@@ -148,11 +153,13 @@ class Redirect {
 							"
 							SELECT p.ID
 							FROM {$wpdb->posts} p
+							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 							INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
 							WHERE p.post_type = 'webring_website'
 							  AND p.post_status = 'publish'
 							  AND tr.term_taxonomy_id = %d
-							  AND p.post_title != %s
+							  AND pm.meta_key = '_webring_website_url_sanitized'
+							  AND pm.meta_value != %s
 							ORDER BY tr.term_order ASC, p.menu_order ASC, p.post_date ASC, p.ID ASC
 							LIMIT 1
 							",
@@ -183,14 +190,17 @@ class Redirect {
 				$order_clause = 'ORDER BY RAND()';
 			}
 
+			// phpcs:ignore PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$sites = $wpdb->get_col(
 				$wpdb->prepare(
 					"
 					SELECT p.ID
 					FROM {$wpdb->posts} p
+					INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 					WHERE p.post_type = 'webring_website'
 					  AND p.post_status = 'publish'
-					  AND p.post_title != %s
+					  AND pm.meta_key = '_webring_website_url_sanitized'
+					  AND pm.meta_value != %s
 					  {$where_clause}
 					{$order_clause}
 					LIMIT 1
@@ -209,9 +219,11 @@ class Redirect {
 							"
 							SELECT p.ID
 							FROM {$wpdb->posts} p
+							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 							WHERE p.post_type = 'webring_website'
 							  AND p.post_status = 'publish'
-							  AND p.post_title != %s
+							  AND pm.meta_key = '_webring_website_url_sanitized'
+							  AND pm.meta_value != %s
 							ORDER BY p.menu_order DESC, p.post_date DESC, p.ID DESC
 							LIMIT 1
 							",
@@ -224,9 +236,11 @@ class Redirect {
 							"
 							SELECT p.ID
 							FROM {$wpdb->posts} p
+							INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 							WHERE p.post_type = 'webring_website'
 							  AND p.post_status = 'publish'
-							  AND p.post_title != %s
+							  AND pm.meta_key = '_webring_website_url_sanitized'
+							  AND pm.meta_value != %s
 							ORDER BY p.menu_order ASC, p.post_date ASC, p.ID ASC
 							LIMIT 1
 							",
@@ -246,19 +260,19 @@ class Redirect {
 		}
 
 		// Get domain from post_title (adjust if using post_name or custom field).
-		$domain = trim( get_post_field( 'post_title', $sites[0] ) );
-		if ( ! $domain ) {
+		$url = trim( get_post_meta( $sites[0], 'webring_website_url', true ) );
+		if ( ! $url ) {
 			return '';
 		}
 
 		// Ensure full URL.
-		if ( ! preg_match( '#^https?://#', $domain ) ) {
-			$domain = 'https://' . $domain;
+		if ( ! preg_match( '#^https?://#', $url ) ) {
+			$url = 'https://' . $url;
 		}
 
 		// phpcs:enable WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-		return esc_url_raw( $domain );
+		return esc_url_raw( $url );
 	}
 
 	/**
@@ -283,9 +297,11 @@ class Redirect {
 				"
 				SELECT p.*
 				FROM {$wpdb->posts} p
+				INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 				WHERE p.post_type = 'webring_website'
 				  AND p.post_status = 'publish'
-				  AND p.post_title = %s
+				  AND pm.meta_key = '_webring_website_url_sanitized'
+				  AND pm.meta_value = %s
 				",
 				$domain
 			)
