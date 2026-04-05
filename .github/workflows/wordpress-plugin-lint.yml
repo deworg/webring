@@ -1,0 +1,41 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run CSS lint
+        continue-on-error: true
+        run: npm run lint:css
+
+      - name: Run JS lint
+        continue-on-error: true
+        run: npm run lint:js
+
+      #- name: Run Markdown docs lint
+      #  continue-on-error: true
+      #  run: npm run lint:md:docs
+
+      #- name: Run Markdown JS lint
+      #  continue-on-error: true
+      #  run: npm run lint:md:js
+
+      - name: Run package.json lint
+        continue-on-error: true
+        run: npm run lint:pkg-json

@@ -1,0 +1,12 @@
+{
+	"extends": "@wordpress/stylelint-config/scss",
+	"customSyntax": "postcss-scss",
+	"plugins": [
+		"stylelint-scss"
+	],
+	"rules": {
+		"at-rule-no-unknown": null,
+		"selector-class-pattern": null,
+		"scss/at-rule-no-unknown": true
+	}
+}

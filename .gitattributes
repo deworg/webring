@@ -1,0 +1,14 @@
+# Auto-detect text files, ensure they use LF.
+* text=auto eol=lf
+
+/composer.json export-ignore
+/composer.lock export-ignore
+/.editorconfig export-ignore
+/.eslintrc export-ignore
+/.gitattributes export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/phpcs.xml export-ignore
+/.stylelintrc.json export-ignore

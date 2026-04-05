@@ -6,6 +6,7 @@
 .gitattributes
 .github
 .gitignore
+.npmpackagejsonlintrc.json
 .stylelintrc.json
 .wordpress-org
 node_modules
