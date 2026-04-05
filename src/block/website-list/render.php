@@ -21,6 +21,7 @@ $args = [
 ];
 
 if ( ! empty( $attributes['categories'] ) ) {
+	// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 	$args['tax_query'] = [
 		[
 			'taxonomy' => 'webring_category',
@@ -125,4 +126,5 @@ if ( empty( $webring_websites ) ) {
 		$wrapper_attributes,
 		$list_items_markup
 	);
+	// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 }
