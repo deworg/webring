@@ -20,7 +20,7 @@ class WebsiteData {
 	 */
 	public function init() {
 		add_action( 'init', [ $this, 'register_post_meta' ] );
-		add_action( 'save_post', [ $this, 'save_sanitized_url_meta' ], 99, 2 );
+		add_action( 'updated_postmeta', [ $this, 'save_sanitized_url_meta' ], 99, 4 );
 	}
 
 	/**
@@ -44,25 +44,15 @@ class WebsiteData {
 	/**
 	 * Saves sanitized URL meta for webring websites.
 	 *
-	 * @param int     $post_id Post ID.
-	 * @param \WP_Post $post    Post object.
+	 * @param int    $meta_id    Meta ID.
+	 * @param int    $post_id    Post ID.
+	 * @param string $meta_key   Meta key.
+	 * @param mixed  $meta_value Meta value.
 	 *
 	 * @return void
 	 */
-	public function save_sanitized_url_meta( $post_id, $post ) {
-		if ( 'webring_website' !== $post->post_type ) {
-			return;
-		}
-
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
-		}
-
-		if ( wp_is_post_revision( $post_id ) ) {
-			return;
-		}
-
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+	public function save_sanitized_url_meta( $meta_id, $post_id, $meta_key, $meta_value ) {
+		if ( $meta_key !== 'webring_website_url' ) {
 			return;
 		}
 
