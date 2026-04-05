@@ -39,6 +39,9 @@ class Redirect {
 		$domain   = get_query_var( 'webring_domain' );
 		$category = get_query_var( 'webring_category' );
 
+		// The post meta always has a trailing slash.
+		$domain = trailingslashit( $domain );
+
 		if ( ! $action || ! $domain ) {
 			return;
 		}
@@ -73,8 +76,6 @@ class Redirect {
 		}
 
 		$current_site_url_sanitized = get_post_meta( $current_site->ID, '_webring_website_url_sanitized', true );
-
-		global $wpdb;
 
 		$term_tax_id = null;
 		if ( $category ) {

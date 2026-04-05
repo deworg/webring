@@ -28,9 +28,9 @@ class CategoryRules {
 	 * @return void
 	 */
 	public function add_rewrite_rules() {
-		// /webring/{category-slug}/{next|prev|random}/{domain.tld}
+		// /webring/{category-slug}/{next|prev|random}/{domain.tld/some/optional-path}
 		add_rewrite_rule(
-			'^webring/(.*)/(prev|next|random|jo)/([^/]+)/?$',
+			'^webring/(.*)/(prev|next|random|jo)/(.*)$',
 			'index.php?webring_category=$matches[1]&webring_action=$matches[2]&webring_domain=$matches[3]',
 			'top'
 		);

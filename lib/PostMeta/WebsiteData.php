@@ -101,11 +101,7 @@ class WebsiteData {
 		}
 
 		$host = strtolower( $parts['host'] );
-		$path = '';
-
-		if ( ! empty( $parts['path'] ) && '/' !== $parts['path'] ) {
-			$path = untrailingslashit( $parts['path'] );
-		}
+		$path = trailingslashit( $parts['path'] );
 
 		return $host . $path;
 	}
