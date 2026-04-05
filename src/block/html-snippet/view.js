@@ -38,12 +38,12 @@ document.addEventListener( "DOMContentLoaded", () => {
 
 document.addEventListener( 'click', ( event ) => {
 	const button = event.target.closest( '.copy-code-button' );
-	if (!button) return;
+	if (!button) {return;}
 
 	const targetId = button.dataset.target;
 	const codeEl = document.getElementById( targetId );
 
-	if (!codeEl) return;
+	if (!codeEl) {return;}
 
 	const text = codeEl.innerText;
 

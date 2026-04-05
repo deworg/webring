@@ -21,7 +21,9 @@ div.wp-block-webring-website-list {
 :root :where(.wp-block-webring-website-list) {
 	padding-left: 2.5em;
 }
+
 :root {
+
 	:where(.wp-block-webring-website-list.is-grid),
 	:where(.wp-block-webring-website-list__list) {
 		padding-left: 0;

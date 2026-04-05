@@ -8,22 +8,17 @@ import { __ } from '@wordpress/i18n';
 /**
  * WordPress dependencies
  */
-import { InspectorControls } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
+	SelectControl,
 	TextControl,
 	ToggleControl,
-	SelectControl,
 } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -36,6 +31,10 @@ import './editor.scss';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
+ *
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
+ * @param {Function} props.setAttributes Function to update block attributes.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
  *
@@ -91,7 +90,8 @@ export default function Edit( { attributes, setAttributes } ) {
 						}
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Syntax Highlighting Settings', 'webring' ) } initialOpen={ true }>
+				<PanelBody title={ __( 'Syntax Highlighting Settings', 'webring' ) }
+				           initialOpen={ true }>
 					<ToggleControl
 						label={ __( 'Enable syntax highlighting', 'webring' ) }
 						checked={ enableSyntaxHighlighting }

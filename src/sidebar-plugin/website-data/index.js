@@ -1,11 +1,10 @@
-import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { TextControl } from '@wordpress/components';
+import { useEntityProp } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { PluginDocumentSettingPanel, store as editorStore } from '@wordpress/editor';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { registerPlugin } from '@wordpress/plugins';
-import { store as editorStore } from '@wordpress/editor';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect } from "@wordpress/element";
-import { useEntityProp } from '@wordpress/core-data';
 
 const WebringWebsiteDataMetaPanel = () => {
 	const postType = useSelect(
@@ -15,15 +14,15 @@ const WebringWebsiteDataMetaPanel = () => {
 
 	const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
 
-	if (postType !== 'webring_website') {
-		return null;
-	}
-
 	const { toggleEditorPanelOpened } = useDispatch( editorStore );
 
 	useEffect( () => {
-		toggleEditorPanelOpened( 'webring-website-data-meta/webring-website-data-meta-panel' );
-	}, [] );
+			toggleEditorPanelOpened( 'webring-website-data-meta/webring-website-data-meta-panel' );
+	}, [ toggleEditorPanelOpened ] );
+
+	if (postType !== 'webring_website') {
+		return null;
+	}
 
 	return (
 		<PluginDocumentSettingPanel

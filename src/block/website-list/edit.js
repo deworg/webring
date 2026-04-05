@@ -2,6 +2,13 @@
  * WordPress dependencies
  */
 import {
+	BlockControls,
+	InspectorControls,
+	__experimentalImageSizeControl as ImageSizeControl,
+	store as blockEditorStore,
+	useBlockProps,
+} from '@wordpress/block-editor';
+import {
 	QueryControls,
 	RangeControl,
 	ToggleControl,
@@ -11,22 +18,16 @@ import {
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
-import {
-	InspectorControls,
-	BlockControls,
-	__experimentalImageSizeControl as ImageSizeControl,
-	store as blockEditorStore,
-} from '@wordpress/block-editor';
+import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import {
-	list,
-	grid,
 	alignNone,
-	positionLeft,
+	grid,
+	list,
 	positionCenter,
+	positionLeft,
 	positionRight,
 } from '@wordpress/icons';
-import { store as coreStore } from '@wordpress/core-data';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -69,14 +70,6 @@ const imageAlignmentOptions = [
 import { __, _x } from '@wordpress/i18n';
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
-
-/**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
  *
@@ -84,6 +77,15 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 import './editor.scss';
 
+/**
+ * Component for block controls.
+ *
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
+ * @param {Function} props.setAttributes Function to update block attributes.
+ *
+ * @return {Element} Controls component.
+ */
 function Controls( { attributes, setAttributes } ) {
 	const {
 		categories,
@@ -392,6 +394,10 @@ function Controls( { attributes, setAttributes } ) {
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
+ * @param {Object}   props               Block props.
+ * @param {Object}   props.attributes    Block attributes.
+ * @param {Function} props.setAttributes Function to update block attributes.
+ *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
  *
  * @return {Element} Element to render.
@@ -400,7 +406,6 @@ export default function Edit( { attributes, setAttributes } ) {
 	const {
 		postLayout,
 	} = attributes;
-	console.log( `postLayout: ${ postLayout }` );
 
 	const inspectorControls = (
 		<InspectorControls>
