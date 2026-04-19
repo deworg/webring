@@ -20,7 +20,7 @@ class WebsiteData {
 	 */
 	public function init() {
 		add_action( 'init', [ $this, 'register_post_meta' ] );
-		add_action( 'updated_postmeta', [ $this, 'save_sanitized_url_meta' ], 99, 4 );
+		add_action( 'updated_postmeta', [ $this, 'save_sanitized_url_meta' ], 99, 3 );
 	}
 
 	/**
@@ -44,15 +44,14 @@ class WebsiteData {
 	/**
 	 * Saves sanitized URL meta for webring websites.
 	 *
-	 * @param int    $meta_id    Meta ID.
-	 * @param int    $post_id    Post ID.
-	 * @param string $meta_key   Meta key.
-	 * @param mixed  $meta_value Meta value.
+	 * @param int    $meta_id  Meta ID.
+	 * @param int    $post_id  Post ID.
+	 * @param string $meta_key Meta key.
 	 *
 	 * @return void
 	 */
-	public function save_sanitized_url_meta( $meta_id, $post_id, $meta_key, $meta_value ) {
-		if ( $meta_key !== 'webring_website_url' ) {
+	public function save_sanitized_url_meta( $meta_id, $post_id, $meta_key ) {
+		if ( 'webring_website_url' !== $meta_key ) {
 			return;
 		}
 

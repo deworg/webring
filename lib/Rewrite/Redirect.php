@@ -106,7 +106,6 @@ class Redirect {
 			$url = 'https://' . $url;
 		}
 
-
 		return esc_url_raw( $url );
 	}
 

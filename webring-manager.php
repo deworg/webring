@@ -18,7 +18,10 @@
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 define( 'WEBRING_MANAGER_VERSION', '1.0.0' );
 define( 'WEBRING_MANAGER_FILE', __FILE__ );
