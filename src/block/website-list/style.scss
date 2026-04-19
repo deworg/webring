@@ -7,7 +7,7 @@
 
 @use "@wordpress/base-styles/mixins" as *;
 
-.wp-block-webring-website-list {
+.wp-block-webring-manager-website-list {
 	// This block has customizable padding, border-box makes that more predictable.
 	box-sizing: border-box;
 
@@ -23,7 +23,7 @@
 		margin-left: 2em;
 	}
 
-	&.wp-block-webring-website-list__list {
+	&.wp-block-webring-manager-website-list__list {
 		list-style: none;
 
 		li {
@@ -58,28 +58,28 @@
 
 :root {
 
-	:where(.wp-block-webring-website-list.is-grid) {
+	:where(.wp-block-webring-manager-website-list.is-grid) {
 		padding: 0;
 	}
 
-	:where(.wp-block-webring-website-list.wp-block-webring-website-list__list) {
+	:where(.wp-block-webring-manager-website-list.wp-block-webring-manager-website-list__list) {
 		padding-left: 0;
 	}
 }
 
-.wp-block-webring-website-list__post-date,
-.wp-block-webring-website-list__post-author {
+.wp-block-webring-manager-website-list__post-date,
+.wp-block-webring-manager-website-list__post-author {
 	display: block;
 	font-size: 0.8125em;
 }
 
-.wp-block-webring-website-list__post-excerpt,
-.wp-block-webring-website-list__post-full-content {
+.wp-block-webring-manager-website-list__post-excerpt,
+.wp-block-webring-manager-website-list__post-full-content {
 	margin-top: 0.5em;
 	margin-bottom: 1em;
 }
 
-.wp-block-webring-website-list__featured-image {
+.wp-block-webring-manager-website-list__featured-image {
 
 	a {
 		display: inline-block;

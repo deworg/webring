@@ -1,5 +1,5 @@
 {
-    "name": "deworg/webring",
+    "name": "deworg/webring-manager",
     "description": "Manage a webring on your WordPress site.",
     "require": {
         "php": ">=7.4",
@@ -21,7 +21,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Webring\\": "lib/"
+            "WebringManager\\": "lib/"
         }
     },
     "config": {

@@ -2,15 +2,15 @@
 /**
  * QueryVars Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\Rewrite;
+namespace WebringManager\Rewrite;
 
 /**
  * QueryVars Class
  *
- * @package webring
+ * @package WebringManager
  */
 class QueryVars {
 	/**

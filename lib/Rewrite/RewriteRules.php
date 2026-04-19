@@ -2,15 +2,15 @@
 /**
  * RewriteRules Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\Rewrite;
+namespace WebringManager\Rewrite;
 
 /**
  * RewriteRules Class
  *
- * @package webring
+ * @package WebringManager
  */
 class RewriteRules {
 	/**

@@ -2,15 +2,15 @@
 /**
  * Category Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\Taxonomy;
+namespace WebringManager\Taxonomy;
 
 /**
  * Category Class
  *
- * @package webring
+ * @package WebringManager
  */
 class Category {
 	/**
@@ -48,28 +48,28 @@ class Category {
 					'assign_terms' => 'edit_posts',
 				],
 				'labels'                => [
-					'name'                       => __( 'Categories', 'webring' ),
-					'singular_name'              => _x( 'Category', 'taxonomy general name', 'webring' ),
-					'search_items'               => __( 'Search Categories', 'webring' ),
-					'popular_items'              => __( 'Popular Categories', 'webring' ),
-					'all_items'                  => __( 'All Categories', 'webring' ),
-					'parent_item'                => __( 'Parent Category', 'webring' ),
-					'parent_item_colon'          => __( 'Parent Category:', 'webring' ),
-					'edit_item'                  => __( 'Edit Category', 'webring' ),
-					'update_item'                => __( 'Update Category', 'webring' ),
-					'view_item'                  => __( 'View Category', 'webring' ),
-					'add_new_item'               => __( 'Add New Category', 'webring' ),
-					'new_item_name'              => __( 'New Category', 'webring' ),
-					'separate_items_with_commas' => __( 'Separate Categories with commas', 'webring' ),
-					'add_or_remove_items'        => __( 'Add or remove Categories', 'webring' ),
-					'choose_from_most_used'      => __( 'Choose from the most used Categories', 'webring' ),
-					'not_found'                  => __( 'No Categories found.', 'webring' ),
-					'no_terms'                   => __( 'No Categories', 'webring' ),
-					'menu_name'                  => __( 'Categories', 'webring' ),
-					'items_list_navigation'      => __( 'Categories list navigation', 'webring' ),
-					'items_list'                 => __( 'Categories list', 'webring' ),
-					'most_used'                  => _x( 'Most Used', 'webring_category', 'webring' ),
-					'back_to_items'              => __( '&larr; Back to Categories', 'webring' ),
+					'name'                       => __( 'Categories', 'webring-manager' ),
+					'singular_name'              => _x( 'Category', 'taxonomy general name', 'webring-manager' ),
+					'search_items'               => __( 'Search Categories', 'webring-manager' ),
+					'popular_items'              => __( 'Popular Categories', 'webring-manager' ),
+					'all_items'                  => __( 'All Categories', 'webring-manager' ),
+					'parent_item'                => __( 'Parent Category', 'webring-manager' ),
+					'parent_item_colon'          => __( 'Parent Category:', 'webring-manager' ),
+					'edit_item'                  => __( 'Edit Category', 'webring-manager' ),
+					'update_item'                => __( 'Update Category', 'webring-manager' ),
+					'view_item'                  => __( 'View Category', 'webring-manager' ),
+					'add_new_item'               => __( 'Add New Category', 'webring-manager' ),
+					'new_item_name'              => __( 'New Category', 'webring-manager' ),
+					'separate_items_with_commas' => __( 'Separate Categories with commas', 'webring-manager' ),
+					'add_or_remove_items'        => __( 'Add or remove Categories', 'webring-manager' ),
+					'choose_from_most_used'      => __( 'Choose from the most used Categories', 'webring-manager' ),
+					'not_found'                  => __( 'No Categories found.', 'webring-manager' ),
+					'no_terms'                   => __( 'No Categories', 'webring-manager' ),
+					'menu_name'                  => __( 'Categories', 'webring-manager' ),
+					'items_list_navigation'      => __( 'Categories list navigation', 'webring-manager' ),
+					'items_list'                 => __( 'Categories list', 'webring-manager' ),
+					'most_used'                  => _x( 'Most Used', 'webring_category', 'webring-manager' ),
+					'back_to_items'              => __( '&larr; Back to Categories', 'webring-manager' ),
 				],
 				'show_in_rest'          => true,
 				'rest_base'             => 'webring_category',
@@ -89,12 +89,12 @@ class Category {
 
 		$messages['webring_category'] = [
 			0 => '', // Unused. Messages start at index 1.
-			1 => __( 'Category added.', 'webring' ),
-			2 => __( 'Category deleted.', 'webring' ),
-			3 => __( 'Category updated.', 'webring' ),
-			4 => __( 'Category not added.', 'webring' ),
-			5 => __( 'Category not updated.', 'webring' ),
-			6 => __( 'Categories deleted.', 'webring' ),
+			1 => __( 'Category added.', 'webring-manager' ),
+			2 => __( 'Category deleted.', 'webring-manager' ),
+			3 => __( 'Category updated.', 'webring-manager' ),
+			4 => __( 'Category not added.', 'webring-manager' ),
+			5 => __( 'Category not updated.', 'webring-manager' ),
+			6 => __( 'Categories deleted.', 'webring-manager' ),
 		];
 
 		return $messages;

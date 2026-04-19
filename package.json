@@ -1,5 +1,5 @@
 {
-	"name": "@deworg/webring",
+	"name": "@deworg/webring-manager",
 	"version": "1.0.0",
 	"description": "Manage a webring on your WordPress site.",
 	"author": "Bernhard Kau",
@@ -14,13 +14,13 @@
 		"open web",
 		"blogroll"
 	],
-	"homepage": "https://github.com/deworg/webring",
+	"homepage": "https://github.com/deworg/webring-manager",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/deworg/webring.git"
+		"url": "https://github.com/deworg/webring-manager.git"
 	},
 	"bugs": {
-		"url": "https://github.com/deworg/webring/issues"
+		"url": "https://github.com/deworg/webring-manager/issues"
 	},
 	"main": "build/index.js",
 	"dependencies": {
@@ -44,7 +44,7 @@
 		"lint:md:js": "wp-scripts lint-md-js",
 		"lint:pkg-json": "wp-scripts lint-pkg-json",
 		"make-json": "wp i18n make-json languages/ --no-purge",
-		"make-pot": "wp i18n make-pot . languages/webring.pot --exclude=vendor,node_modules,src",
+		"make-pot": "wp i18n make-pot . languages/webring-manager.pot --exclude=vendor,node_modules,src",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
 		"postpackages-update": "npm run build",

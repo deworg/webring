@@ -167,7 +167,7 @@ function Controls( { attributes, setAttributes } ) {
 	return (
 		<>
 			<ToolsPanel
-				label={ __( 'Post meta', 'webring' ) }
+				label={ __( 'Post meta', 'webring-manager' ) }
 				resetAll={ () =>
 					setAttributes( {
 						displayWebsiteUrl: false,
@@ -176,14 +176,14 @@ function Controls( { attributes, setAttributes } ) {
 			>
 				<ToolsPanelItem
 					hasValue={ () => !!displayWebsiteUrl }
-					label={ __( 'Display website URL', 'webring' ) }
+					label={ __( 'Display website URL', 'webring-manager' ) }
 					onDeselect={ () =>
 						setAttributes( { displayWebsiteUrl: false } )
 					}
 					isShownByDefault
 				>
 					<ToggleControl
-						label={ __( 'Display website URL', 'webring' ) }
+						label={ __( 'Display website URL', 'webring-manager' ) }
 						checked={ displayWebsiteUrl }
 						onChange={ ( value ) =>
 							setAttributes( { displayWebsiteUrl: value } )
@@ -440,7 +440,7 @@ export default function Edit( { attributes, setAttributes } ) {
 
 			<div { ...useBlockProps() } title="wrapper">
 				<ServerSideRender
-					block="webring/website-list"
+					block="webring-manager/website-list"
 					attributes={ attributes }
 				/>
 			</div>

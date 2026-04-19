@@ -55,11 +55,11 @@ export default function Edit( { attributes, setAttributes } ) {
 		<>
 			<InspectorControls>
 				<PanelBody
-					title={ __( 'Webring Settings', 'webring' ) }
+					title={ __( 'Webring Settings', 'webring-manager' ) }
 					initialOpen={ true }
 				>
 					<TextControl
-						label={ __( 'Webring name', 'webring' ) }
+						label={ __( 'Webring name', 'webring-manager' ) }
 						value={ webringName }
 						onChange={ ( value ) =>
 							setAttributes( { webringName: value } )
@@ -67,7 +67,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show copy instructions', 'webring' ) }
+						label={ __( 'Show copy instructions', 'webring-manager' ) }
 						checked={ showCopyInstructions }
 						onChange={ ( value ) =>
 							setAttributes( { showCopyInstructions: value } )
@@ -75,7 +75,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show copy button', 'webring' ) }
+						label={ __( 'Show copy button', 'webring-manager' ) }
 						checked={ showCopyButton }
 						onChange={ ( value ) =>
 							setAttributes( { showCopyButton: value } )
@@ -83,24 +83,24 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 
 					<ToggleControl
-						label={ __( 'Show customization instructions', 'webring' ) }
+						label={ __( 'Show customization instructions', 'webring-manager' ) }
 						checked={ showCustomizationInstructions }
 						onChange={ ( value ) =>
 							setAttributes( { showCustomizationInstructions: value } )
 						}
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Syntax Highlighting Settings', 'webring' ) }
+				<PanelBody title={ __( 'Syntax Highlighting Settings', 'webring-manager' ) }
 				           initialOpen={ true }>
 					<ToggleControl
-						label={ __( 'Enable syntax highlighting', 'webring' ) }
+						label={ __( 'Enable syntax highlighting', 'webring-manager' ) }
 						checked={ enableSyntaxHighlighting }
 						onChange={ ( value ) => setAttributes( { enableSyntaxHighlighting: value } ) }
 					/>
 					{ enableSyntaxHighlighting && (
 						<>
 							<SelectControl
-								label={ __( 'Select syntax highlighting theme', 'webring' ) }
+								label={ __( 'Select syntax highlighting theme', 'webring-manager' ) }
 								value={ syntaxHighlightingTheme }
 								options={ [
 									{ label: 'Light', value: 'prism-theme-default' },
@@ -110,7 +110,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								onChange={ ( value ) => setAttributes( { syntaxHighlightingTheme: value } ) }
 							/>
 							<ToggleControl
-								label={ __( 'Wrap lines', 'webring' ) }
+								label={ __( 'Wrap lines', 'webring-manager' ) }
 								checked={ wrapLines }
 								onChange={ ( value ) => setAttributes( { wrapLines: value } ) }
 							/>
@@ -121,7 +121,7 @@ export default function Edit( { attributes, setAttributes } ) {
 
 			<div { ...useBlockProps() }>
 				<ServerSideRender
-					block="webring/html-snippet"
+					block="webring-manager/html-snippet"
 					attributes={ attributes }
 				/>
 			</div>

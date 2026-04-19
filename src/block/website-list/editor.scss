@@ -3,29 +3,29 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-div.wp-block-webring-website-list {
+div.wp-block-webring-manager-website-list {
 	padding: 0;
 }
 
-.wp-block-webring-website-list {
+.wp-block-webring-manager-website-list {
 	// Apply overflow for post items, so any floated featured images won't crop the focus style.
 	> li {
 		overflow: hidden;
 	}
 }
 
-.wp-block-webring-website-list li a > div {
+.wp-block-webring-manager-website-list li a > div {
 	display: inline;
 }
 
-:root :where(.wp-block-webring-website-list) {
+:root :where(.wp-block-webring-manager-website-list) {
 	padding-left: 2.5em;
 }
 
 :root {
 
-	:where(.wp-block-webring-website-list.is-grid),
-	:where(.wp-block-webring-website-list__list) {
+	:where(.wp-block-webring-manager-website-list.is-grid),
+	:where(.wp-block-webring-manager-website-list__list) {
 		padding-left: 0;
 	}
 }

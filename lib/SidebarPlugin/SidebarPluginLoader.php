@@ -2,15 +2,15 @@
 /**
  * SidebarPluginLoader Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\SidebarPlugin;
+namespace WebringManager\SidebarPlugin;
 
 /**
  * SidebarPluginLoader Class
  *
- * @package webring
+ * @package WebringManager
  */
 class SidebarPluginLoader {
 	/**
@@ -28,11 +28,11 @@ class SidebarPluginLoader {
 	 * @return void
 	 */
 	public function enqueue_block_editor_assets() {
-		$asset = include WEBRING_PATH . '/build/sidebar-plugin.asset.php';
+		$asset = include WEBRING_MANAGER_PATH . '/build/sidebar-plugin.asset.php';
 
 		wp_enqueue_script(
 			'webring-sidebar-plugin',
-			WEBRING_URL . '/build/sidebar-plugin.js',
+			WEBRING_MANAGER_URL . '/build/sidebar-plugin.js',
 			$asset['dependencies'],
 			$asset['version'],
 			true
