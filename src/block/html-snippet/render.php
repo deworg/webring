@@ -65,7 +65,6 @@ $block_id = wp_unique_id( 'code-block-' );
 		);
 		// phpcs:ignore Squiz.PHP.EmbeddedPhp ?></code></pre>
 	</div>
-	<script>Prism.highlightAll();console.log('highlighted')</script>
 	<?php if ( $show_copy_button ) : ?>
 	<button
 		class="copy-code-button"
