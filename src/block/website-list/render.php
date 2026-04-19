@@ -57,7 +57,7 @@ if ( empty( $webring_websites ) ) {
 		$website_title = get_the_title( $website );
 
 		if ( ! $website_title ) {
-			$website_title = __( '(no title)', 'webring' );
+			$website_title = esc_html__( '(no title)', 'webring' );
 		}
 
 		$list_items_markup .= '<li>';
@@ -101,7 +101,7 @@ if ( empty( $webring_websites ) ) {
 		$list_items_markup .= sprintf(
 			'<a class="wp-block-webring-website-list__post-title" href="%1$s">%2$s</a>',
 			esc_url( $website_link ),
-			$website_title
+			esc_html( $website_title )
 		);
 
 		$list_items_markup .= "</li>\n";
