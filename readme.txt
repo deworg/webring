@@ -1,4 +1,4 @@
-=== Webring ===
+=== Webring Manager ===
 
 Contributors: Kau-Boy
 Stable tag: 1.0.0
@@ -25,10 +25,10 @@ that lists all websites currently included in a webring.
 = Contribute and translate =
 
 You can contribute to the development of this plugin on
-[GitHub](https://github.com/deworg/webring).
+[GitHub](https://github.com/deworg/webring-manager).
 
 Help translate this plugin into your language on
-[translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/webring/).
+[translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/webring-manager/).
 
 == Changelog ==
 

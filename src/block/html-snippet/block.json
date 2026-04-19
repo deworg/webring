@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "webring/html-snippet",
+	"name": "webring-manager/html-snippet",
 	"version": "0.1.0",
 	"title": "Webring HTML snippet",
 	"category": "widgets",
@@ -41,7 +41,7 @@
 			"default": false
 		}
 	},
-	"textdomain": "webring",
+	"textdomain": "webring-manager",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

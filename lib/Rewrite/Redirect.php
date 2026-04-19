@@ -2,15 +2,15 @@
 /**
  * Redirect Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\Rewrite;
+namespace WebringManager\Rewrite;
 
 /**
  * Redirect Class
  *
- * @package webring
+ * @package WebringManager
  */
 class Redirect {
 	/**
@@ -52,7 +52,7 @@ class Redirect {
 
 		$target_url = $this->get_new_webring_site( $action, $domain, $category );
 		if ( ! $target_url ) {
-			wp_die( esc_html__( 'Target site not found', 'webring' ), 'Webring', 404 );
+			wp_die( esc_html__( 'Target site not found', 'webring-manager' ), 'WebringManager', 404 );
 		}
 
 		wp_redirect( $target_url ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
@@ -72,7 +72,7 @@ class Redirect {
 
 		$current_site = $this->get_site_by_domain( $url );
 		if ( ! $current_site ) {
-			wp_die( 'Webring site not found', 'Webring', 404 );
+			wp_die( 'Webring site not found', 'WebringManager', 404 );
 		}
 
 		$current_site_url_sanitized = get_post_meta( $current_site->ID, '_webring_website_url_sanitized', true );

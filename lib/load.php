@@ -2,21 +2,21 @@
 /**
  * Main plugin file to load other classes
  *
- * @package Webring
+ * @package WebringManager
  */
 
-namespace Webring;
+namespace WebringManager;
 
-use Webring\Block\ManifestLoader;
-use Webring\PostMeta\WebsiteData;
-use Webring\PostType\Website;
-use Webring\Rewrite\CategoryRules;
-use Webring\Rewrite\QueryVars;
-use Webring\Rewrite\Redirect;
-use Webring\Rewrite\RewriteRules;
-use Webring\Rewrite\Setup;
-use Webring\SidebarPlugin\SidebarPluginLoader;
-use Webring\Taxonomy\Category;
+use WebringManager\Block\ManifestLoader;
+use WebringManager\PostMeta\WebsiteData;
+use WebringManager\PostType\Website;
+use WebringManager\Rewrite\CategoryRules;
+use WebringManager\Rewrite\QueryVars;
+use WebringManager\Rewrite\Redirect;
+use WebringManager\Rewrite\RewriteRules;
+use WebringManager\Rewrite\Setup;
+use WebringManager\SidebarPlugin\SidebarPluginLoader;
+use WebringManager\Taxonomy\Category;
 
 /**
  * Init function of the plugin
@@ -44,4 +44,4 @@ function init() {
 	}
 }
 
-add_action( 'plugins_loaded', 'Webring\init' );
+add_action( 'plugins_loaded', 'WebringManager\init' );

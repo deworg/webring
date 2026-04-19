@@ -2,7 +2,7 @@
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
- * @package webring
+ * @package WebringManager
  *
  *  The following variables are exposed to the file:
  *
@@ -43,7 +43,7 @@ if ( empty( $webring_websites ) ) {
 
 	printf(
 		'<div class="components-placeholder"><div class="components-placeholder__fieldset">%s</div></div>',
-		esc_html__( 'No websites found. Try to change your filters', 'webring' ),
+		esc_html__( 'No websites found. Try to change your filters', 'webring-manager' ),
 	);
 
 	return;
@@ -59,7 +59,7 @@ if ( empty( $webring_websites ) ) {
 		$website_title = get_the_title( $website );
 
 		if ( ! $website_title ) {
-			$website_title = esc_html__( '(no title)', 'webring' );
+			$website_title = esc_html__( '(no title)', 'webring-manager' );
 		}
 
 		$list_items_markup .= '<li>';
@@ -73,7 +73,7 @@ if ( empty( $webring_websites ) ) {
 				$image_style .= sprintf( 'max-height:%spx;', $attributes['featuredImageSizeHeight'] );
 			}
 
-			$image_classes = 'wp-block-webring-website-list__featured-image';
+			$image_classes = 'wp-block-webring-manager-website-list__featured-image';
 			if ( isset( $attributes['featuredImageAlign'] ) ) {
 				$image_classes .= ' align' . $attributes['featuredImageAlign'];
 			}
@@ -101,7 +101,7 @@ if ( empty( $webring_websites ) ) {
 		}
 
 		$list_items_markup .= sprintf(
-			'<a class="wp-block-webring-website-list__post-title" href="%1$s">%2$s</a>',
+			'<a class="wp-block-webring-manager-website-list__post-title" href="%1$s">%2$s</a>',
 			esc_url( $website_link ),
 			esc_html( $website_title )
 		);
@@ -109,7 +109,7 @@ if ( empty( $webring_websites ) ) {
 		$list_items_markup .= "</li>\n";
 	}
 
-	$classes = [ 'wp-block-webring-website-list__list' ];
+	$classes = [ 'wp-block-webring-manager-website-list__list' ];
 	if ( isset( $attributes['postLayout'] ) && 'grid' === $attributes['postLayout'] ) {
 		$classes[] = 'is-grid';
 	}

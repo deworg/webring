@@ -2,15 +2,15 @@
 /**
  * Setup Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\Rewrite;
+namespace WebringManager\Rewrite;
 
 /**
  * Setup Class
  *
- * @package webring
+ * @package WebringManager
  */
 class Setup {
 	/**
@@ -28,7 +28,7 @@ class Setup {
 	 * @return void
 	 */
 	public static function activated() {
-		add_option( 'webring_activated', 'webring' );
+		add_option( 'webring_activated', 'webring-manager' );
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Setup {
 	 * @return void
 	 */
 	public function flush_rewrite_rules() {
-		if ( is_admin() && get_option( 'webring_activated' ) === 'webring' ) {
+		if ( is_admin() && get_option( 'webring_activated' ) === 'webring-manager' ) {
 			delete_option( 'webring_activated' );
 			flush_rewrite_rules();
 		}

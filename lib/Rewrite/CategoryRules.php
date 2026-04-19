@@ -2,15 +2,15 @@
 /**
  * CategoryRules Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\Rewrite;
+namespace WebringManager\Rewrite;
 
 /**
  * CategoryRules Class
  *
- * @package webring
+ * @package WebringManager
  */
 class CategoryRules {
 	/**

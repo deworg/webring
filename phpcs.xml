@@ -65,8 +65,8 @@
 			<!-- Value: replace the function, class, and variable prefixes used. -->
 			<properties>
 				<property name="prefixes" type="array">
-					<element value="webring_"/>
-					<element value="Webring"/>
+					<element value="webring_manager_"/>
+					<element value="WebringManager"/>
 				</property>
 			</properties>
 		</properties>
@@ -76,7 +76,7 @@
 			<!-- Value: replace the text domain used. -->
 			<properties>
 				<property name="text_domain" type="array">
-					<element value="webring"/>
+					<element value="webring-manager"/>
 				</property>
 			</properties>
 		</properties>

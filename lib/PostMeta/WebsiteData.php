@@ -2,15 +2,15 @@
 /**
  * WebsiteData Class
  *
- * @package webring
+ * @package WebringManager
  */
 
-namespace Webring\PostMeta;
+namespace WebringManager\PostMeta;
 
 /**
  * WebsiteData Class
  *
- * @package webring
+ * @package WebringManager
  */
 class WebsiteData {
 	/**

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "webring/website-list",
+	"name": "webring-manager/website-list",
 	"version": "0.1.0",
 	"title": "Webring Website List",
 	"category": "widgets",
@@ -89,7 +89,7 @@
 			"default": false
 		}
 	},
-	"textdomain": "webring",
+	"textdomain": "webring-manager",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
