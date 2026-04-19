@@ -22,6 +22,14 @@ The plugin also provides a block for displaying the HTML snippet
 visitors can use to join or link to your webrings, plus a block
 that lists all websites currently included in a webring.
 
+= Contribute and translate =
+
+You can contribute to the development of this plugin on
+[GitHub](https://github.com/deworg/webring).
+
+Help translate this plugin into your language on
+[translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/webring/).
+
 == Changelog ==
 
 = 1.0.0 =
