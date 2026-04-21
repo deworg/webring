@@ -9,7 +9,11 @@
 .npmpackagejsonlintrc.json
 .stylelintrc.json
 .wordpress-org
+LICENSE
 node_modules
 package-lock.json
 package.json
 phpcs.xml
+postcss.config.js
+src/
+webpack.config.js
