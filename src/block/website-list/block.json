@@ -6,7 +6,7 @@
 	"title": "Webring Website List",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Example block scaffolded with Create Block tool.",
+	"description": "Display a list of websites in a webring.",
 	"example": {},
 	"supports": {
 		"anchor": true,
