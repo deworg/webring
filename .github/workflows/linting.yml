@@ -11,25 +11,29 @@ jobs:
     name: Lint (${{ matrix.task }})
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     strategy:
       fail-fast: false
       matrix:
         task:
           - css
           - js
-          # - md-docs
-          # - md-js
           - pkg-json
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --prefer-offline
 
       - name: Run CSS lint
         if: matrix.task == 'css'
@@ -38,14 +42,6 @@ jobs:
       - name: Run JS lint
         if: matrix.task == 'js'
         run: npm run lint:js
-
-      # - name: Run Markdown docs lint
-      #   if: matrix.task == 'md-docs'
-      #   run: npm run lint:md:docs
-
-      # - name: Run Markdown JS lint
-      #   if: matrix.task == 'md-js'
-      #   run: npm run lint:md:js
 
       - name: Run package.json lint
         if: matrix.task == 'pkg-json'
