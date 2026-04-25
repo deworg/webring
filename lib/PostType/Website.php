@@ -27,7 +27,7 @@ class Website {
 	/**
 	 * Registers the `webring_website` post type.
 	 */
-	public function register_post_type():void {
+	public function register_post_type(): void {
 		register_post_type(
 			'webring_website',
 			[
@@ -89,6 +89,7 @@ class Website {
 	public function updated_messages( array $messages ): array {
 		global $post;
 
+		// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 		/** @var string $permalink */
 		$permalink = get_permalink( $post );
 
@@ -123,7 +124,7 @@ class Website {
 	 *
 	 * @param array<string, array<string, string>> $bulk_messages  Arrays of messages, each keyed by the corresponding post type. Messages are
 	 *                              keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
-	 * @param int[] $bulk_counts    Array of item counts for each message, used to build internationalized strings.
+	 * @param int[]                                $bulk_counts    Array of item counts for each message, used to build internationalized strings.
 	 *
 	 * @return array<string, array<string, string>> Bulk messages for the `webring_website` post type.
 	 */

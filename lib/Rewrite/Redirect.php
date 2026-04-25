@@ -10,6 +10,12 @@ namespace WebringManager\Rewrite;
 /**
  * Redirect Class
  *
+ * @phpstan-type WP_Post_Row object{
+ *   ID: int,
+ *   menu_order: string,
+ *   post_date: string
+ * }
+ *
  * @package WebringManager
  */
 class Redirect {
@@ -70,6 +76,8 @@ class Redirect {
 	 */
 	public function get_new_webring_site( string $action, string $url, ?string $category ): string {
 
+		// phpcs:ignore Generic.Commenting.DocComment.MissingShort
+		/** @var WP_Post_Row $current_site */
 		$current_site = $this->get_site_by_domain( $url );
 		if ( ! $current_site ) {
 			wp_die( 'Webring site not found', 'WebringManager', 404 );
@@ -79,6 +87,7 @@ class Redirect {
 
 		$term_tax_id = null;
 		if ( $category ) {
+			// phpcs:ignore Generic.Commenting.DocComment.MissingShort
 			/** @var \WP_Term $term */
 			$term = get_term_by( 'slug', $category, 'webring_category' );
 			if ( ! $term ) {
@@ -113,15 +122,12 @@ class Redirect {
 	/**
 	 * Builds and executes the query for candidate site IDs.
 	 *
-	 * @param string   $action                      The navigation action.
-	 * @param object{
-	 *     ID:int,
-	 *     menu_order:string,
-	 *     post_date:string
-	 * }               $current_site                The current site object.
-	 * @param string   $current_site_url_sanitized  The sanitized current site URL.
-	 * @param int|null $term_tax_id                 Optional term taxonomy ID
-	 *                                              when filtering by category.
+	 * @phpstan-param WP_Post_Row $current_site
+	 *
+	 * @param string   $action                     The navigation action.
+	 * @param object   $current_site               The current site object.
+	 * @param string   $current_site_url_sanitized The sanitized current site URL.
+	 * @param int|null $term_tax_id                Optional term taxonomy ID when filtering by category.
 	 *
 	 * @return array<int> List of matching post IDs.
 	 */
@@ -158,12 +164,10 @@ class Redirect {
 	/**
 	 * Returns SQL clause data for the requested navigation action.
 	 *
-	 * @param string $action       The navigation action.     *
-	 * @param object{
-	 *      ID:int,
-	 *      menu_order:string,
-	 *      post_date:string
-	 *  }            $current_site The current site object
+	 * @phpstan-param WP_Post_Row $current_site
+	 *
+	 * @param string $action       The navigation action.
+	 * @param object $current_site The current site object.
 	 *
 	 * @return array<string, string>|null
 	 */
@@ -198,12 +202,10 @@ class Redirect {
 	/**
 	 * Builds the boundary clause for prev/next navigation.
 	 *
+	 * @phpstan-param WP_Post_Row $current_site
+	 *
 	 * @param string $operator     Comparison operator.
-	 * @param object{
-	 *      'ID':int,
-	 *      'menu_order':string,
-	 *      'post_date':string
-	 *  }            $current_site The current site object.
+	 * @param object $current_site The current site object.
 	 *
 	 * @return string
 	 */
@@ -284,8 +286,7 @@ class Redirect {
 	 *
 	 * @param string $domain The domain name to search for. The domain is normalized to lowercase.
 	 *
-	 * @return object{ID:int,menu_order:string,post_date:string}|null Post objects of the matching sites, or null if no
-	 *                                                                site is found.
+	 * @return object Post objects of the matching sites, or null if no site is found.
 	 */
 	public function get_site_by_domain( string $domain ): ?object {
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery

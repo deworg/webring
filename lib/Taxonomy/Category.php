@@ -27,7 +27,7 @@ class Category {
 	 * Registers the `webring_category` taxonomy,
 	 * for use with 'webring_website'.
 	 */
-	public function register_taxonomy() :void{
+	public function register_taxonomy(): void {
 		register_taxonomy(
 			'webring_category',
 			[ 'webring_website' ],
