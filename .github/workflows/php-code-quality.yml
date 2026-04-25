@@ -1,0 +1,30 @@
+name: PHP Code Quality
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+
+jobs:
+  php:
+    name: PHP Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Composer install
+        uses: shivammathur/setup-php@v2
+
+      - name: Install with dev dependencies
+        run: composer install
+
+      - name: PHPCS
+        continue-on-error: true
+        run: vendor/bin/phpcs
+
+      - name: PHPStan
+        continue-on-error: true
+        run: vendor/bin/phpstan analyze

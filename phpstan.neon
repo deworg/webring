@@ -1,0 +1,7 @@
+parameters:
+    level: 10
+    scanFiles:
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+        - vendor/szepeviktor/phpstan-wordpress/extension.neon
+    paths:
+        - src/

@@ -6,7 +6,15 @@
  *
  *  The following variables are exposed to the file:
  *
- * @var array    $attributes The block attributes.
+ * @var array{
+ *   webringName: string|null,
+ *   showCopyInstructions: bool|null,
+ *   showCopyButton: bool|null,
+ *   showCustomizationInstructions: bool|null,
+ *   enableSyntaxHighlighting: bool|null,
+ *   syntaxHighlightingTheme: string|null,
+ *   wrapLines: bool|null
+ * } $attributes The block attributes.
  * @var string   $content    The block default content.
  * @var WP_Block $block      The block instance.
  *
@@ -20,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-$webring_name                    = $attributes['webringName'] ?? 'webring-manager';
+$webring_name                    = $attributes['webringName'] ?? 'Webring';
 $show_copy_instructions          = $attributes['showCopyInstructions'] ?? true;
 $show_copy_button                = $attributes['showCopyButton'] ?? true;
 $show_customization_instructions = $attributes['showCustomizationInstructions'] ?? false;
@@ -51,7 +59,7 @@ $block_id = wp_unique_id( 'code-block-' );
 				sprintf(
 				// translators: %1$s: The webring URL for `index`, %2$s: The `index` link text.
 					'<a href="%1$s">%2$s</a>',
-					esc_url( get_home_url( null,'/webring' ) ),
+					esc_url( get_home_url( null, '/webring' ) ),
 					esc_attr( $webring_name ),
 				),
 				sprintf(
@@ -63,7 +71,7 @@ $block_id = wp_unique_id( 'code-block-' );
 				sprintf(
 				// translators: %1$s: The webring URL for `next`, %2$s: The `next` link text.
 					'<a href="%1$s">%2$s</a>',
-					esc_url( get_home_url( null,'/webring' ) . '/next/YOUR-DOMAIN.TLD' ),
+					esc_url( get_home_url( null, '/webring' ) . '/next/YOUR-DOMAIN.TLD' ),
 					esc_attr_x( 'next', 'webring next link text', 'webring-manager' ),
 				)
 			)

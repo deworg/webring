@@ -6,7 +6,26 @@
  *
  *  The following variables are exposed to the file:
  *
- * @var array    $attributes The block attributes.
+ * @var array{
+ *   categories: array<int, array{id: int, name: string}>,
+ *   postLayout: string|null,
+ *   columns: int|null,
+ *   displayFeaturedImage: bool|null,
+ *   featuredImageAlign: 'left'|'center'|'right'|null,
+ *   featuredImageSizeSlug: string,
+ *   featuredImageSizeWidth?: int|null,
+ *   featuredImageSizeHeight?: int|null,
+ *   addLinkToFeaturedImage: bool|null,
+ *   style: array{
+ *     elements: array{
+ *       link: array{
+ *         color: array{
+ *           text: bool|null
+ *         }
+ *       }
+ *     }
+ *   }
+ * } $attributes The block attributes.
  * @var string   $content    The block default content.
  * @var WP_Block $block      The block instance.
  *
@@ -36,7 +55,10 @@ if ( ! empty( $attributes['categories'] ) ) {
 	];
 }
 
-$query            = new WP_Query();
+$query = new WP_Query();
+
+// phpcs:ignore Generic.Commenting.DocComment.MissingShort
+/** @var array<\WP_Post> $webring_websites */
 $webring_websites = $query->query( $args );
 
 if ( empty( $webring_websites ) ) {
@@ -58,7 +80,9 @@ if ( empty( $webring_websites ) ) {
 	$list_items_markup = '';
 
 	foreach ( $webring_websites as $website ) {
-		$website_link  = get_post_meta( $website, 'webring_website_url' );
+		// phpcs:ignore Generic.Commenting.DocComment.MissingShort
+		/** @var string $website_link */
+		$website_link  = get_post_meta( $website->ID, 'webring_website_url', true );
 		$website_title = get_the_title( $website );
 
 		if ( ! $website_title ) {
