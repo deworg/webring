@@ -45,25 +45,25 @@ $block_id = wp_unique_id( 'code-block-' );
 				sprintf(
 				// translators: %1$s: The webring URL for `prev`, %2$s: The `prev` link text.
 					'<a href="%1$s">%2$s</a>',
-					esc_url( get_home_url( '/webring' ) . '/prev/YOUR-DOMAIN.TLD' ),
+					esc_url( get_home_url( null, '/webring' ) . '/prev/YOUR-DOMAIN.TLD' ),
 					esc_attr_x( 'prev', 'webring prev link text', 'webring-manager' ),
 				),
 				sprintf(
 				// translators: %1$s: The webring URL for `index`, %2$s: The `index` link text.
 					'<a href="%1$s">%2$s</a>',
-					esc_url( get_home_url( '/webring' ) ),
+					esc_url( get_home_url( null,'/webring' ) ),
 					esc_attr( $webring_name ),
 				),
 				sprintf(
 				// translators: %1$s: The webring URL for `random`, %2$s: The `random` link text.
 					'<a href="%1$s">%2$s</a>',
-					esc_url( get_home_url( '/webring' ) . '/random/YOUR-DOMAIN.TLD' ),
+					esc_url( get_home_url( null, '/webring' ) . '/random/YOUR-DOMAIN.TLD' ),
 					esc_attr_x( 'random', 'webring random link text', 'webring-manager' ),
 				),
 				sprintf(
 				// translators: %1$s: The webring URL for `next`, %2$s: The `next` link text.
 					'<a href="%1$s">%2$s</a>',
-					esc_url( get_home_url( '/webring' ) . '/next/YOUR-DOMAIN.TLD' ),
+					esc_url( get_home_url( null,'/webring' ) . '/next/YOUR-DOMAIN.TLD' ),
 					esc_attr_x( 'next', 'webring next link text', 'webring-manager' ),
 				)
 			)
