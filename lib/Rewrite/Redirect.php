@@ -62,13 +62,13 @@ class Redirect {
 	/**
 	 * Retrieves the URL of the next, previous, or random site in a webring.
 	 *
-	 * @param string      $action   The action to perform: 'next', 'prev' or 'random'.
-	 * @param string      $url      The current site's domain.
-	 * @param string|null $category Optional. The category slug to filter sites by. Default null.
+	 * @param string  $action   The action to perform: 'next', 'prev' or 'random'.
+	 * @param string  $url      The current site's domain.
+	 * @param ?string $category Optional. The category slug to filter sites by. Default null.
 	 *
 	 * @return string The URL of the new site in the webring, or an empty string if no site is found.
 	 */
-	public function get_new_webring_site( string $action, string $url, string $category = null ): string {
+	public function get_new_webring_site( string $action, string $url, ?string $category ): string {
 
 		$current_site = $this->get_site_by_domain( $url );
 		if ( ! $current_site ) {
@@ -79,11 +79,12 @@ class Redirect {
 
 		$term_tax_id = null;
 		if ( $category ) {
+			/** @var \WP_Term $term */
 			$term = get_term_by( 'slug', $category, 'webring_category' );
 			if ( ! $term ) {
 				return '';
 			}
-			$term_tax_id = (int) $term->term_taxonomy_id;
+			$term_tax_id = $term->term_taxonomy_id;
 		}
 
 		$sites = $this->query_candidate_sites(
@@ -112,10 +113,15 @@ class Redirect {
 	/**
 	 * Builds and executes the query for candidate site IDs.
 	 *
-	 * @param string   $action                     The navigation action.
-	 * @param object   $current_site               The current site object.
-	 * @param string   $current_site_url_sanitized The sanitized current site URL.
-	 * @param int|null $term_tax_id                Optional term taxonomy ID when filtering by category.
+	 * @param string   $action                      The navigation action.
+	 * @param object{
+	 *     ID:int,
+	 *     menu_order:string,
+	 *     post_date:string
+	 * }               $current_site                The current site object.
+	 * @param string   $current_site_url_sanitized  The sanitized current site URL.
+	 * @param int|null $term_tax_id                 Optional term taxonomy ID
+	 *                                              when filtering by category.
 	 *
 	 * @return array<int> List of matching post IDs.
 	 */
@@ -152,8 +158,12 @@ class Redirect {
 	/**
 	 * Returns SQL clause data for the requested navigation action.
 	 *
-	 * @param string $action       The navigation action.
-	 * @param object $current_site Current site object.
+	 * @param string $action       The navigation action.     *
+	 * @param object{
+	 *      ID:int,
+	 *      menu_order:string,
+	 *      post_date:string
+	 *  }            $current_site The current site object
 	 *
 	 * @return array<string, string>|null
 	 */
@@ -189,7 +199,11 @@ class Redirect {
 	 * Builds the boundary clause for prev/next navigation.
 	 *
 	 * @param string $operator     Comparison operator.
-	 * @param object $current_site Current site object.
+	 * @param object{
+	 *      'ID':int,
+	 *      'menu_order':string,
+	 *      'post_date':string
+	 *  }            $current_site The current site object.
 	 *
 	 * @return string
 	 */
@@ -270,7 +284,8 @@ class Redirect {
 	 *
 	 * @param string $domain The domain name to search for. The domain is normalized to lowercase.
 	 *
-	 * @return object|null The ID of the matching site, or null if no site is found.
+	 * @return object{ID:int,menu_order:string,post_date:string}|null Post objects of the matching sites, or null if no
+	 *                                                                site is found.
 	 */
 	public function get_site_by_domain( string $domain ): ?object {
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery

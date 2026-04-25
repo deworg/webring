@@ -100,7 +100,7 @@ class WebsiteData {
 		}
 
 		$host = strtolower( $parts['host'] );
-		$path = trailingslashit( $parts['path'] );
+		$path = isset( $parts['path'] ) ? trailingslashit( $parts['path'] ) : '';
 
 		return $host . $path;
 	}

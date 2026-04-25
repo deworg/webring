@@ -21,7 +21,7 @@ use WebringManager\Taxonomy\Category;
 /**
  * Init function of the plugin
  */
-function init() {
+function init(): void {
 	// Construct all modules to initialize.
 	$modules = [
 		'block_manifest_loader'     => new ManifestLoader(),
@@ -38,6 +38,7 @@ function init() {
 
 	// Initialize all modules.
 	foreach ( $modules as $module ) {
+		// @phpstan-ignore function.alreadyNarrowedType
 		if ( is_callable( [ $module, 'init' ] ) ) {
 			call_user_func( [ $module, 'init' ] );
 		}

@@ -27,7 +27,7 @@ class Category {
 	 * Registers the `webring_category` taxonomy,
 	 * for use with 'webring_website'.
 	 */
-	public function register_taxonomy() {
+	public function register_taxonomy() :void{
 		register_taxonomy(
 			'webring_category',
 			[ 'webring_website' ],
@@ -81,12 +81,11 @@ class Category {
 	/**
 	 * Sets the post updated messages for the `webring_category` taxonomy.
 	 *
-	 * @param array $messages Post updated messages.
+	 * @param array<string, array<int, string>> $messages Post updated messages.
 	 *
-	 * @return array Messages for the `webring_category` taxonomy.
+	 * @return array<string, array<int, string>> Messages for the `webring_category` taxonomy.
 	 */
 	public function updated_messages( $messages ): array {
-
 		$messages['webring_category'] = [
 			0 => '', // Unused. Messages start at index 1.
 			1 => __( 'Category added.', 'webring-manager' ),

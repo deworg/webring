@@ -25,9 +25,9 @@ class QueryVars {
 	/**
 	 * Modifies the list of query variables to include custom variables used for webring functionality.
 	 *
-	 * @param array $vars An array of existing query variables.
+	 * @param array<int, string> $vars An array of existing query variables.
 	 *
-	 * @return array The array of query variables, including custom webring variables.
+	 * @return array<int, string> The array of query variables, including custom webring variables.
 	 */
 	public function query_vars( $vars ): array {
 		$vars[] = 'webring_action';

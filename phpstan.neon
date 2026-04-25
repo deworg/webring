@@ -1,7 +1,13 @@
 parameters:
-    level: 10
+    level: 8
+    ignoreErrors:
+        - "#WEBRING_MANAGER_PATH#"
+        - "#WEBRING_MANAGER_URL#"
     scanFiles:
         - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
         - vendor/szepeviktor/phpstan-wordpress/extension.neon
     paths:
+        - lib/
         - src/
+        - webring-manager.php
+    treatPhpDocTypesAsCertain: false

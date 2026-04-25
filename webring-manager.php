@@ -34,7 +34,7 @@ webring_manager_pre_init();
 /**
  * Pre init function to check the plugin's compatibility.
  */
-function webring_manager_pre_init() {
+function webring_manager_pre_init(): void {
 	// Check if the min. required PHP version is available and if not, show an admin notice.
 	if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 		add_action( 'admin_notices', 'webring_manager_min_php_version_error' );
@@ -74,7 +74,7 @@ function webring_manager_pre_init() {
 /**
  * Show an admin notice error message if the PHP version is too low.
  */
-function webring_manager_min_php_version_error() {
+function webring_manager_min_php_version_error(): void {
 	echo '<div class="error"><p>';
 	esc_html_e( 'Webring Manager requires PHP version 7.4 or higher to function properly. Please upgrade PHP or deactivate Webring Manager.', 'webring-manager' );
 	echo '</p></div>';
@@ -83,7 +83,7 @@ function webring_manager_min_php_version_error() {
 /**
  * Show an admin notice error message if the composer autoloader is missing.
  */
-function webring_manager_autoloader_missing() {
+function webring_manager_autoloader_missing(): void {
 	echo '<div class="error"><p>';
 	esc_html_e( 'Webring Manager is missing the Composer autoloader file. Please run `composer install --no-dev -o` in the root folder of the plugin or use a release version including the `vendor` folder.', 'webring-manager' );
 	echo '</p></div>';
@@ -92,7 +92,7 @@ function webring_manager_autoloader_missing() {
 /**
  * Show an admin notice error message if the build files are missing.
  */
-function webring_manager_build_files_missing() {
+function webring_manager_build_files_missing(): void {
 	echo '<div class="error"><p>';
 	esc_html_e( 'Webring Manager is missing the build file. Please run `npm install` and `npm run build` in the root folder of the plugin or use a release version including the `build` folder.', 'webring-manager' );
 	echo '</p></div>';

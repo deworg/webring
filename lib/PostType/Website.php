@@ -27,7 +27,7 @@ class Website {
 	/**
 	 * Registers the `webring_website` post type.
 	 */
-	public function register_post_type() {
+	public function register_post_type():void {
 		register_post_type(
 			'webring_website',
 			[
@@ -71,7 +71,6 @@ class Website {
 				'has_archive'           => true,
 				'rewrite'               => true,
 				'query_var'             => true,
-				'menu_position'         => null,
 				'menu_icon'             => 'dashicons-share-alt',
 				'show_in_rest'          => true,
 				'rest_base'             => 'webring_website',
@@ -83,13 +82,14 @@ class Website {
 	/**
 	 * Sets the post updated messages for the `webring_website` post type.
 	 *
-	 * @param array $messages Post updated messages.
+	 * @param array<string, array<int, string|bool>> $messages Post updated messages.
 	 *
-	 * @return array Messages for the `webring_website` post type.
+	 * @return array<string, array<int, string|bool>> Messages for the `webring_website` post type.
 	 */
 	public function updated_messages( array $messages ): array {
 		global $post;
 
+		/** @var string $permalink */
 		$permalink = get_permalink( $post );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
@@ -121,11 +121,11 @@ class Website {
 	/**
 	 * Sets the bulk post updated messages for the `webring_website` post type.
 	 *
-	 * @param array $bulk_messages  Arrays of messages, each keyed by the corresponding post type. Messages are
+	 * @param array<string, array<string, string>> $bulk_messages  Arrays of messages, each keyed by the corresponding post type. Messages are
 	 *                              keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
 	 * @param int[] $bulk_counts    Array of item counts for each message, used to build internationalized strings.
 	 *
-	 * @return array Bulk messages for the `webring_website` post type.
+	 * @return array<string, array<string, string>> Bulk messages for the `webring_website` post type.
 	 */
 	public function bulk_updated_messages( array $bulk_messages, array $bulk_counts ): array {
 		$bulk_messages['webring_website'] = [
