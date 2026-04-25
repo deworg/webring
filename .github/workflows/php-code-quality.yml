@@ -7,24 +7,33 @@ on:
       - develop
 
 jobs:
-  php:
-    name: PHP Code Quality
+  php-quality:
+    name: PHP Code Quality (${{ matrix.tool }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        tool:
+          - phpcs
+          - phpstan
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Composer install
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
 
-      - name: Install with dev dependencies
+      - name: Install dependencies
         run: composer install
 
-      - name: PHPCS
-        continue-on-error: true
+      - name: Run PHPCS
+        if: matrix.tool == 'phpcs'
         run: vendor/bin/phpcs
 
-      - name: PHPStan
-        continue-on-error: true
+      - name: Run PHPStan
+        if: matrix.tool == 'phpstan'
         run: vendor/bin/phpstan analyze

@@ -8,11 +8,22 @@ on:
 
 jobs:
   lint:
+    name: Lint (${{ matrix.task }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        task:
+          - css
+          - js
+          # - md-docs
+          # - md-js
+          - pkg-json
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -21,21 +32,21 @@ jobs:
         run: npm install
 
       - name: Run CSS lint
-        continue-on-error: true
+        if: matrix.task == 'css'
         run: npm run lint:css
 
       - name: Run JS lint
-        continue-on-error: true
+        if: matrix.task == 'js'
         run: npm run lint:js
 
-      #- name: Run Markdown docs lint
-      #  continue-on-error: true
-      #  run: npm run lint:md:docs
+      # - name: Run Markdown docs lint
+      #   if: matrix.task == 'md-docs'
+      #   run: npm run lint:md:docs
 
-      #- name: Run Markdown JS lint
-      #  continue-on-error: true
-      #  run: npm run lint:md:js
+      # - name: Run Markdown JS lint
+      #   if: matrix.task == 'md-js'
+      #   run: npm run lint:md:js
 
       - name: Run package.json lint
-        continue-on-error: true
+        if: matrix.task == 'pkg-json'
         run: npm run lint:pkg-json
