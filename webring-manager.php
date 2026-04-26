@@ -10,7 +10,7 @@
  * Plugin Name: Webring Manager
  * Plugin URI: https://wordpress.org/plugins/webring-manager/
  * Description: Manage a webring on your WordPress site.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Bernhard Kau
  * Author URI: https://github.com/deworg/webring-manager
  * Text Domain: webring-manager

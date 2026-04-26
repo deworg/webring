@@ -1,7 +1,7 @@
 === Webring Manager ===
 
 Contributors: Kau-Boy
-Stable Tag: 1.1.0
+Stable Tag: 1.2.0
 Tested up to: 6.9
 Requires at least: 6.8
 Requires PHP: 7.4
@@ -31,6 +31,14 @@ You can contribute to the development of this plugin on [GitHub](https://github.
 Help translate this plugin into your language on [translate.wordpress.org](https://translate.wordpress.org/projects/wp-plugins/webring-manager/).
 
 == Changelog ==
+
+= 1.2.0 =
+* Add order field to "Quick Edit"
+* Add "Webring Category" columns to posts list
+
+= 1.1.0 =
+* Fix missing webring slug in HTML snippets URL - thanks to @threadi for his support!
+* Fix order in website-list block
 
 = 1.0.0 =
 * First stable version
