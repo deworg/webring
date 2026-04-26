@@ -22,6 +22,9 @@ class Website {
 		add_action( 'init', [ $this, 'register_post_type' ] );
 		add_filter( 'post_updated_messages', [ $this, 'updated_messages' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_updated_messages' ], 10, 2 );
+		add_filter( 'manage_webring_website_posts_columns', [ $this, 'add_webring_category_column' ] );
+		add_action( 'manage_webring_website_posts_custom_column', [ $this, 'display_webring_category_column' ], 10, 2 );
+		add_action( 'restrict_manage_posts', [ $this, 'add_webring_category_filter' ] );
 	}
 
 	/**
@@ -67,6 +70,9 @@ class Website {
 					'editor',
 					'thumbnail',
 					'title',
+				],
+				'taxonomies'            => [
+					'webring_category',
 				],
 				'has_archive'           => true,
 				'rewrite'               => true,
@@ -114,6 +120,7 @@ class Website {
 			/* translators: %s: post permalink */
 			10 => sprintf( __( 'Website draft updated. <a target="_blank" href="%s">Preview Website</a>', 'webring-manager' ), esc_url( add_query_arg( 'preview', 'true', $permalink ) ) ),
 		];
+
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		return $messages;
@@ -122,9 +129,11 @@ class Website {
 	/**
 	 * Sets the bulk post updated messages for the `webring_website` post type.
 	 *
-	 * @param array<string, array<string, string>> $bulk_messages  Arrays of messages, each keyed by the corresponding post type. Messages are
-	 *                              keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
-	 * @param int[]                                $bulk_counts    Array of item counts for each message, used to build internationalized strings.
+	 * @param array<string, array<string, string>> $bulk_messages Arrays of messages, each keyed by the corresponding
+	 *                                                            post type. Messages are keyed with 'updated',
+	 *                                                            'locked', 'deleted', 'trashed', and 'untrashed'.
+	 * @param int[]                                $bulk_counts   Array of item counts for each message, used to build
+	 *                                                            internationalized strings.
 	 *
 	 * @return array<string, array<string, string>> Bulk messages for the `webring_website` post type.
 	 */
@@ -144,5 +153,68 @@ class Website {
 		];
 
 		return $bulk_messages;
+	}
+
+	/**
+	 * Adds the Webring Category column to the Websites list table.
+	 *
+	 * @param array<string, string> $columns The columns array.
+	 *
+	 * @return array<string, string> Modified columns array.
+	 */
+	public function add_webring_category_column( array $columns ): array {
+		$new_columns = [];
+		foreach ( $columns as $key => $value ) {
+			$new_columns[ $key ] = $value;
+			if ( 'title' === $key ) {
+				$new_columns['webring_category'] = __( 'Webring Category', 'webring-manager' );
+			}
+		}
+
+		return $new_columns;
+	}
+
+	/**
+	 * Displays the Webring Category in the custom column.
+	 *
+	 * @param string $column_name The name of the column to display.
+	 * @param int    $post_id     The ID of the post.
+	 */
+	public function display_webring_category_column( string $column_name, int $post_id ): void {
+		if ( 'webring_category' === $column_name ) {
+			$terms = get_the_terms( $post_id, 'webring_category' );
+			if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+				$term_names = [];
+				foreach ( $terms as $term ) {
+					$term_names[] = esc_html( $term->name );
+				}
+				echo implode( ', ', $term_names ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			} else {
+				echo esc_html__( 'No Category', 'webring-manager' );
+			}
+		}
+	}
+
+	/**
+	 * Adds a dropdown filter for Webring Categories on the Websites administration page.
+	 *
+	 * @param string $post_type The current post type.
+	 */
+	public function add_webring_category_filter( string $post_type ): void {
+		if ( 'webring_website' === $post_type ) {
+			$taxonomy = 'webring_category';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$selected = isset( $_GET[ $taxonomy ] ) ? sanitize_text_field( wp_unslash( $_GET[ $taxonomy ] ) ) : '';
+			$args     = [
+				'show_option_all' => __( 'All Webring Categories', 'webring-manager' ),
+				'taxonomy'        => $taxonomy,
+				'name'            => $taxonomy,
+				'orderby'         => 'name',
+				'selected'        => $selected,
+				'value_field'     => 'slug',
+				'hierarchical'    => true,
+			];
+			wp_dropdown_categories( $args );
+		}
 	}
 }
