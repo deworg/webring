@@ -10,7 +10,7 @@
  * Plugin Name: Webring Manager
  * Plugin URI: https://wordpress.org/plugins/webring-manager/
  * Description: Manage a webring on your WordPress site.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Bernhard Kau
  * Author URI: https://github.com/deworg/webring-manager
  * Text Domain: webring-manager
@@ -23,10 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBRING_MANAGER_VERSION', '1.0.0' );
-define( 'WEBRING_MANAGER_FILE', __FILE__ );
-define( 'WEBRING_MANAGER_PATH', plugin_dir_path( WEBRING_MANAGER_FILE ) );
-define( 'WEBRING_MANAGER_URL', plugin_dir_url( WEBRING_MANAGER_FILE ) );
+define( 'WEBRING_MANAGER_PATH', plugin_dir_path( __FILE__ ) );
+define( 'WEBRING_MANAGER_URL', plugin_dir_url( __FILE__ ) );
 
 // The pre_init functions check the compatibility of the plugin and calls the init function if check were successful.
 webring_manager_pre_init();
