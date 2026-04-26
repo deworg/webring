@@ -42,6 +42,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 $args = [
 	'post_type'   => 'webring_website',
 	'post_status' => 'publish',
+	'orderby'     => [
+		'menu_order' => 'ASC',
+		'post_date'  => 'ASC',
+		'ID'         => 'ASC',
+	],
 ];
 
 if ( ! empty( $attributes['categories'] ) ) {
@@ -53,6 +58,7 @@ if ( ! empty( $attributes['categories'] ) ) {
 			'terms'    => array_column( $attributes['categories'], 'id' ),
 		],
 	];
+	// @TODO: Find a solution for an `odrderby` by the `term_order` or something similar.
 }
 
 $query = new WP_Query();
