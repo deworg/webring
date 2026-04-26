@@ -65,6 +65,7 @@ class Website {
 				'supports'              => [
 					'custom-fields',
 					'editor',
+					'page-attributes',
 					'thumbnail',
 					'title',
 				],
