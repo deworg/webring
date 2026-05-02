@@ -1,0 +1,43 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "\/?page_id=304",
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "webring-manager"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require '/wordpress/wp-load.php'; $posts = get_posts( array( 'numberposts' => -1, 'post_type' => array( 'post', 'page' ), 'post_status' => 'any' ) ); foreach ( $posts as $post ) { wp_delete_post( $post->ID, true ); }"
+    },
+    {
+      "step": "importWxr",
+      "file": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/deworg/webring-manager/develop/.wordpress-org/blueprints/imports/webring-media.xml"
+      }
+    },
+    {
+      "step": "importWxr",
+      "file": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/deworg/webring-manager/develop/.wordpress-org/blueprints/imports/webring-pages.xml"
+      }
+    },
+    {
+      "step": "importWxr",
+      "file": {
+        "resource": "url",
+        "url": "https://raw.githubusercontent.com/deworg/webring-manager/develop/.wordpress-org/blueprints/imports/webring-websites.xml"
+      }
+    },
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    }
+  ]
+}
